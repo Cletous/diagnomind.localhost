@@ -1,5 +1,6 @@
 <?php
 
+use App\Livewire\Doctor\SubmitDiagnosis;
 use App\Livewire\Patient\Dashboard;
 use Illuminate\Support\Facades\Route;
 
@@ -17,6 +18,10 @@ Route::middleware(['auth'])->group(function () {
 
     Route::prefix('patient')->as('patient.')->group(function () {
         Route::get('/dashboard', Dashboard::class)->name('dashboard');
+    });
+
+    Route::prefix('doctor')->as('doctor.')->group(function () {
+        Route::get('/submit-diagnosis', SubmitDiagnosis::class)->name('submit-diagnosis');
     });
 });
 
