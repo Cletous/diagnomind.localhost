@@ -33,7 +33,7 @@ class SubmitDiagnosis extends Component
     public function submit()
     {
         $this->validate([
-            'prompt' => 'required|string|min:10',
+            'prompt' => 'required|string',
         ]);
 
         if (!$this->patient) {
@@ -42,13 +42,11 @@ class SubmitDiagnosis extends Component
         }
 
         // Call AI API
-        $response = Http::withHeaders([
-            'Authorization' => 'Bearer ' . config('services.huggingface.token'),
-        ])->post('https://api-inference.huggingface.co/models/KarmaIncarnate/DistilForMedicalDiagnosis', [
-                    'inputs' => $this->prompt,
-                ]);
+        $response = Http::post('http://127.0.0.1:8000/predict', [
+            'inputs' => $this->prompt,
+        ]);
 
-        $this->ai_response = $response['generated_text'] ?? 'No response received.';
+        $this->ai_response = $response->json('prediction') ?? 'No diagnosis returned.';
 
         // Save to DB
         DiagnosisRequest::create([
