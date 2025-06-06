@@ -47,4 +47,14 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function diagnosesGiven()
+    {
+        return $this->hasMany(DiagnosisRequest::class, 'doctor_id');
+    }
+
+    public function diagnosesReceived()
+    {
+        return $this->hasMany(DiagnosisRequest::class, 'patient_id');
+    }
 }
