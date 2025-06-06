@@ -8,7 +8,7 @@
             @foreach ($diagnoses as $diagnosis)
                 <div class="list-group-item mb-3 border rounded shadow-sm p-3">
                     <h5>Seen by Dr. {{ $diagnosis->doctor->first_name }} {{ $diagnosis->doctor->last_name }}</h5>
-                    <p><strong>Prompt:</strong> {{ $diagnosis->prompt }}</p>
+                    <p><strong>Condition:</strong> {{ $diagnosis->prompt }}</p>
                     <p><strong>AI Response:</strong> {{ $diagnosis->ai_response }}</p>
                     <p>
                         <strong>Rating:</strong>
