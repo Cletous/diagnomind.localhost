@@ -116,6 +116,18 @@ class AuthLivewire extends Component
         };
     }
 
+    public function getValidationMessagesForStep()
+    {
+        return match ($this->registerStep) {
+            2 => [
+                'national_id_number.regex' =>
+                    'The national id number must be in the format NNNNNNNNLNN or NNNNNNNNNLNN where N is a Number and L a capital letter.',
+            ],
+            default => [],
+        };
+    }
+
+
     public function register()
     {
         $this->validate($this->getValidationRulesForStep());
