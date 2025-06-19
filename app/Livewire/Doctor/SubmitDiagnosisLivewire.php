@@ -7,7 +7,7 @@ use App\Models\DiagnosisRequest;
 use Illuminate\Support\Facades\Http;
 use Livewire\Component;
 
-class SubmitDiagnosis extends Component
+class SubmitDiagnosisLivewire extends Component
 {
     public $national_id_number;
     public $patient;
