@@ -73,7 +73,23 @@ class AuthLivewire extends Component
 
         if (Auth::attempt(['email' => $this->email, 'password' => $this->password])) {
             session()->regenerate();
-            return redirect()->intended('/patient/dashboard');
+
+            $user = Auth::user();
+
+            if (!$user->hasVerifiedEmail()) {
+                Auth::logout();
+                session()->flash('error', 'Please verify your email');
+                return redirect()->route('verification.notice');
+            }
+
+            // Redirect based on role
+            if ($user->roles->contains('name', 'admin')) {
+                return redirect('/admin/dashboard');
+            } elseif ($user->roles->contains('name', 'doctor')) {
+                return redirect('/doctor/dashboard');
+            } else {
+                return redirect('/patient/dashboard');
+            }
         }
 
         session()->flash('error', 'Invalid credentials');
