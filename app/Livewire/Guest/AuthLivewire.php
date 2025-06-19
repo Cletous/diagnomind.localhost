@@ -89,12 +89,6 @@ class AuthLivewire extends Component
         session()->flash('error', 'Invalid credentials');
     }
 
-    public function nextStep()
-    {
-        $this->validate($this->getValidationRulesForStep());
-        $this->registerStep++;
-    }
-
     public function previousStep()
     {
         $this->registerStep = max(1, $this->registerStep - 1);
@@ -127,10 +121,22 @@ class AuthLivewire extends Component
         };
     }
 
+    public function nextStep()
+    {
+        $this->validate(
+            $this->getValidationRulesForStep(),
+            $this->getValidationMessagesForStep()
+        );
+
+        $this->registerStep++;
+    }
 
     public function register()
     {
-        $this->validate($this->getValidationRulesForStep());
+        $this->validate(
+            $this->getValidationRulesForStep(),
+            $this->getValidationMessagesForStep()
+        );
 
         $user = User::create([
             'first_name' => $this->first_name,
