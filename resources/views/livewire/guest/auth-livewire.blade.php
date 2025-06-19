@@ -36,23 +36,36 @@
 
                         {{-- REGISTER --}}
                     @elseif($mode === 'register')
-                        <h3 class="mb-4">Register</h3>
-                        <form wire:submit.prevent="register">
-                            <x-auth.input type="text" model="first_name" label="First Name" />
-                            <x-auth.input type="text" model="last_name" label="Last Name" />
-                            <x-auth.input type="text" model="national_id_number"
-                                label="National ID Number (NNNNNNNNLNN)" />
-                            <x-auth.input type="email" model="email" label="Email" />
-                            <x-auth.password model="password" showModel="show_password" />
-                            <x-auth.password model="password_confirmation" label="Confirm Password"
-                                showModel="show_password" />
+                        <h3 class="mb-4">Register - Step {{ $registerStep }} of 3</h3>
+                        <form wire:submit.prevent="{{ $registerStep === 3 ? 'register' : 'nextStep' }}">
+                            @if ($registerStep === 1)
+                                <x-auth.input type="text" model="first_name" label="First Name" />
+                            @elseif($registerStep === 2)
+                                <x-auth.input type="text" model="last_name" label="Last Name" />
+                                <x-auth.input type="text" model="national_id_number"
+                                    label="National ID Number (NNNNNNNNLNN)" />
+                            @elseif($registerStep === 3)
+                                <x-auth.input type="email" model="email" label="Email" />
+                                <x-auth.password model="password" showModel="show_password" />
+                                <x-auth.password model="password_confirmation" label="Confirm Password"
+                                    showModel="show_password" />
+                            @endif
 
-                            <button class="btn btn-success w-100">Register</button>
-                            <div class="text-center mt-3">
-                                <a href="{{ route('login') }}">Already have an account? Login</a>
+                            <div class="d-flex justify-content-between gap-2">
+                                @if ($registerStep > 1)
+                                    <button type="button" wire:click="previousStep"
+                                        class="btn btn-secondary w-100">Back</button>
+                                @endif
+
+                                <button type="submit" class="btn btn-success w-100">
+                                    {{ $registerStep === 3 ? 'Register' : 'Next' }}
+                                </button>
                             </div>
                         </form>
 
+                        <div class="text-center mt-3">
+                            <a href="{{ route('login') }}">Already have an account? Login</a>
+                        </div>
                         {{-- FORGOT PASSWORD --}}
                     @elseif($mode === 'forget_password')
                         <h3 class="mb-4">Reset Your Password</h3>
