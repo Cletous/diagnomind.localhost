@@ -83,11 +83,11 @@ class AuthLivewire extends Component
         $this->validate([
             'first_name' => 'required|string|max:100',
             'last_name' => 'required|string|max:100',
-            'national_id_number' => 'required|string|unique:users,national_id_number',
+            'national_id_number' => 'required|regex:/^\d{8,9}[A-Z]\d{2}$/|unique:users,national_id_number',
             'email' => 'required|email|unique:users,email',
             'role' => 'required|in:doctor,patient',
             'password' => 'required|string|min:6|confirmed',
-        ]);
+        ], ['national_id_number.regex' => 'The :attribute must be in the format NNNNNNNNLNN or NNNNNNNNNLNN where N is a Number and L a capital letter']);
 
         $user = User::create([
             'first_name' => $this->first_name,
@@ -106,14 +106,14 @@ class AuthLivewire extends Component
     {
         $this->validate([
             'email' => 'required|email|exists:users,email',
-        ]);
+        ], ['email.exists' => 'The :attribute is not found in our database.'], );
 
         try {
             \Illuminate\Support\Facades\Password::sendResetLink(['email' => $this->email]);
 
             session()->flash('success', 'Password reset link sent! Please check your inbox.');
         } catch (\Throwable $e) {
-            session()->flash('error', 'Failed to send password reset link. Try again later.');
+            session()->flash('error', 'Failed to send password reset link. Try again later. Error: ' . $e);
         }
     }
 

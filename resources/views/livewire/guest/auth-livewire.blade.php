@@ -54,7 +54,7 @@
                     </div>
                     <div class="mb-3">
                         <input type="text" wire:model.defer="national_id_number" class="form-control"
-                            placeholder="National ID Number" required>
+                            placeholder="NNNNNNNNLNN" required>
                         @error('national_id_number')
                             <div class="text-danger small">{{ $message }}</div>
                         @enderror
