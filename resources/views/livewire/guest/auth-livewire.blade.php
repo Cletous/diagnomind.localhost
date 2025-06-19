@@ -42,8 +42,7 @@
                                 <x-auth.input type="text" model="first_name" label="First Name" />
                             @elseif($registerStep === 2)
                                 <x-auth.input type="text" model="last_name" label="Last Name" />
-                                <x-auth.input type="text" model="national_id_number"
-                                    label="National ID Number (NNNNNNNNLNN)" />
+                                <x-auth.input type="text" model="national_id_number" label="National ID Number" />
                             @elseif($registerStep === 3)
                                 <x-auth.input type="email" model="email" label="Email" />
                                 <x-auth.password model="password" showModel="show_password" />
