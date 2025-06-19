@@ -4,11 +4,11 @@ namespace App\Livewire\Guest;
 
 use App\Models\Role;
 use App\Models\User;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
 use Livewire\Component;
-use Stevebauman\Location\Facades\Location;
 
 class AuthLivewire extends Component
 {
@@ -97,12 +97,13 @@ class AuthLivewire extends Component
             'password' => Hash::make($this->password),
         ]);
 
-        // Assign default role (Patient)
         $role = Role::where('name', 'patient')->first();
         $user->roles()->attach($role->id);
 
+        event(new Registered($user)); // sends email verification
+
         Auth::login($user);
-        return redirect('/patient/dashboard');
+        return redirect()->route('verification.notice');
     }
 
     public function sendPasswordResetLink()
