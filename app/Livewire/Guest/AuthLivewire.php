@@ -76,12 +76,6 @@ class AuthLivewire extends Component
 
             $user = Auth::user();
 
-            if (!$user->hasVerifiedEmail()) {
-                Auth::logout();
-                session()->flash('error', 'Please verify your email');
-                return redirect()->route('verification.notice');
-            }
-
             // Redirect based on role
             if ($user->roles->contains('name', 'admin')) {
                 return redirect('/admin/dashboard');

@@ -11,7 +11,7 @@ Route::view('profile', 'profile')
     ->middleware(['auth'])
     ->name('profile');
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::prefix('patient')->as('patient.')->group(function () {
         Route::get('/dashboard', DashboardLivewire::class)->name('dashboard');
