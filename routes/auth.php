@@ -1,16 +1,12 @@
 <?php
 
-use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Support\Facades\Auth;
 
-Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
-Route::post('/login', [LoginController::class, 'login']);
+use App\Livewire\Guest\AuthLivewire;
 
-Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
-Route::post('/register', [RegisterController::class, 'register']);
-
+Route::get('/login', AuthLivewire::class)->name('login');
+Route::get('/register', AuthLivewire::class)->name('register');
 Route::post('/logout', function () {
     Auth::logout();
-    return redirect('/login');
+    return redirect()->route('login');
 })->name('logout');
