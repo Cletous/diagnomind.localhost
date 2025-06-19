@@ -14,11 +14,20 @@
             <p class="text-muted">DiagnoMind allows registered doctors to enter symptoms and receive AI-powered
                 diagnosis predictions using a fine-tuned DistilBERT model.</p>
             <ul class="list-group list-group-flush">
-                <li class="list-group-item">🧠 Fast and accurate prediction</li>
-                <li class="list-group-item">📊 Save and review diagnosis history</li>
-                <li class="list-group-item">👨‍⚕️ Doctor feedback to improve results</li>
-                <li class="list-group-item">👥 Patients view their diagnosis anytime</li>
+                <li class="list-group-item">
+                    <i class="bi bi-cpu me-2 text-primary"></i> Fast and accurate prediction
+                </li>
+                <li class="list-group-item">
+                    <i class="bi bi-bar-chart-line me-2 text-success"></i> Save and review diagnosis history
+                </li>
+                <li class="list-group-item">
+                    <i class="bi bi-chat-dots me-2 text-warning"></i> Doctor feedback to improve results
+                </li>
+                <li class="list-group-item">
+                    <i class="bi bi-person-badge me-2 text-info"></i> Patients view their diagnosis anytime
+                </li>
             </ul>
+
             @if (auth()->check())
                 <a href="{{ route(name: 'patient.dashboard') }}" class="btn btn-primary mt-4">Dashboard</a>
                 <a href="{{ route(name: 'doctor.submit.diagnosis') }}" class="btn btn-outline-primary mt-4">Diagnose

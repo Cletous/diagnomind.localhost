@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <title>DiagnoMind</title>
     <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/icons/bootstrap-icons/bootstrap-icons.min.css') }}" rel="stylesheet">
     @livewireStyles
 </head>
 
