@@ -20,7 +20,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/email/verification-notification', function (Request $request) {
         $request->user()->sendEmailVerificationNotification();
         return back()->with('success', 'Verification link sent!');
-    })->middleware(['throttle:6,1'])->name('verification.send');
+    })->middleware('throttle:1,5')   // 1 request per 5 minutes
+        ->name('verification.send');
 });
 
 
