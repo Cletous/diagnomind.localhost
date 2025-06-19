@@ -18,13 +18,13 @@
                     <i class="bi bi-cpu me-2 text-primary"></i> Fast and accurate prediction
                 </li>
                 <li class="list-group-item">
-                    <i class="bi bi-bar-chart-line me-2 text-success"></i> Save and review diagnosis history
+                    <i class="bi bi-bar-chart-line me-2 text-primary"></i> Save and review diagnosis history
                 </li>
                 <li class="list-group-item">
-                    <i class="bi bi-chat-dots me-2 text-warning"></i> Doctor feedback to improve results
+                    <i class="bi bi-chat-dots me-2 text-primary"></i> Doctor feedback to improve results
                 </li>
                 <li class="list-group-item">
-                    <i class="bi bi-person-badge me-2 text-info"></i> Patients view their diagnosis anytime
+                    <i class="bi bi-person-badge me-2 text-primary"></i> Patients view their diagnosis anytime
                 </li>
             </ul>
 
