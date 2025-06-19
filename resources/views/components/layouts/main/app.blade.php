@@ -9,11 +9,7 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container">
-            <a class="navbar-brand" href="{{ route('home') }}">DiagnoMind</a>
-        </div>
-    </nav>
+    @includeIf('components.layouts.main.header')
 
     <main class="container py-4">
         {{ $slot }}
