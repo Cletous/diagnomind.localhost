@@ -2,6 +2,7 @@
     <div class="row justify-content-center">
         <div class="col-md-6">
 
+            {{-- LOGIN --}}
             @if ($mode === 'login')
                 <h3 class="mb-4">Login</h3>
                 @if (session()->has('error'))
@@ -22,9 +23,12 @@
                     </div>
                     <button class="btn btn-primary w-100">Login</button>
                     <div class="text-center mt-3">
-                        <a href="{{ route('register') }}">Don't have an account? Register</a>
+                        <a href="{{ route('register') }}">Don't have an account? Register</a> |
+                        <a href="{{ route('forget_password') }}">Forgot Password?</a>
                     </div>
                 </form>
+
+                {{-- REGISTER --}}
             @elseif($mode === 'register')
                 <h3 class="mb-4">Register</h3>
                 <form wire:submit.prevent="register">
@@ -69,7 +73,65 @@
                         <a href="{{ route('login') }}">Already have an account? Login</a>
                     </div>
                 </form>
+
+                {{-- FORGOT PASSWORD --}}
+            @elseif($mode === 'forget_password')
+                <h3 class="mb-4">Reset Your Password</h3>
+                @if (session()->has('success'))
+                    <div class="alert alert-success">{{ session('success') }}</div>
+                @elseif (session()->has('error'))
+                    <div class="alert alert-danger">{{ session('error') }}</div>
+                @endif
+                <form wire:submit.prevent="sendPasswordResetLink">
+                    <div class="mb-3">
+                        <input type="email" wire:model.defer="email" class="form-control" placeholder="Email address"
+                            required>
+                    </div>
+                    <button class="btn btn-primary w-100" wire:loading.attr="disabled">
+                        <span wire:loading.remove wire:target="sendPasswordResetLink">Send Reset Link</span>
+                        <span wire:loading wire:target="sendPasswordResetLink">
+                            <span class="spinner-border spinner-border-sm"></span> Sending...
+                        </span>
+                    </button>
+                </form>
+                <div class="text-center mt-3">
+                    <a href="{{ route('login') }}">← Back to login</a>
+                </div>
+
+                {{-- RESET PASSWORD --}}
+            @elseif($mode === 'reset_password')
+                <h3 class="mb-4">Set New Password</h3>
+                @if (session()->has('success'))
+                    <div class="alert alert-success">{{ session('success') }}</div>
+                @elseif (session()->has('error'))
+                    <div class="alert alert-danger">{{ session('error') }}</div>
+                @endif
+                <form wire:submit.prevent="reset_password">
+                    <div class="mb-3">
+                        <input type="email" wire:model.defer="email" class="form-control" placeholder="Email"
+                            readonly>
+                    </div>
+                    <div class="mb-3">
+                        <input type="{{ $show_password ? 'text' : 'password' }}" wire:model.defer="new_password"
+                            class="form-control" placeholder="New Password" required>
+                    </div>
+                    <div class="mb-3">
+                        <input type="{{ $show_password ? 'text' : 'password' }}"
+                            wire:model.defer="new_password_confirmation" class="form-control"
+                            placeholder="Confirm Password" required>
+                        <div class="form-check mt-2">
+                            <input class="form-check-input" type="checkbox"
+                                wire:model.live.debounce.10ms="show_password" id="showResetPassword">
+                            <label class="form-check-label" for="showResetPassword">Show password</label>
+                        </div>
+                    </div>
+                    <button class="btn btn-success w-100">Reset Password</button>
+                </form>
+                <div class="text-center mt-3">
+                    <a href="{{ route('login') }}">← Back to login</a>
+                </div>
             @endif
+
         </div>
     </div>
 </div>

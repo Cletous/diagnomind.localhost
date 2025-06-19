@@ -102,6 +102,22 @@ class AuthLivewire extends Component
         return redirect('/patient/dashboard');
     }
 
+    public function sendPasswordResetLink()
+    {
+        $this->validate([
+            'email' => 'required|email|exists:users,email',
+        ]);
+
+        try {
+            \Illuminate\Support\Facades\Password::sendResetLink(['email' => $this->email]);
+
+            session()->flash('success', 'Password reset link sent! Please check your inbox.');
+        } catch (\Throwable $e) {
+            session()->flash('error', 'Failed to send password reset link. Try again later.');
+        }
+    }
+
+
     public function logout()
     {
         Auth::logout();
