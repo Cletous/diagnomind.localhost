@@ -97,7 +97,7 @@ class AuthLivewire extends Component
             'password' => Hash::make($this->password),
         ]);
 
-        // Assign role
+        // Assign default role (Patient)
         $role = Role::where('name', 'patient')->first();
         $user->roles()->attach($role->id);
 
