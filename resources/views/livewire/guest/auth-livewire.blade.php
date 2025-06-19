@@ -11,10 +11,16 @@
                 <form wire:submit.prevent="login">
                     <div class="mb-3">
                         <input type="email" wire:model.defer="email" class="form-control" placeholder="Email" required>
+                        @error('email')
+                            <div class="text-danger small">{{ $message }}</div>
+                        @enderror
                     </div>
                     <div class="mb-3">
                         <input type="{{ $show_password ? 'text' : 'password' }}" wire:model.defer="password"
                             class="form-control" placeholder="Password" required>
+                        @error('password')
+                            <div class="text-danger small">{{ $message }}</div>
+                        @enderror
                         <div class="form-check mt-2">
                             <input class="form-check-input" type="checkbox"
                                 wire:model.live.debounce.10ms="show_password" id="showPassword">
@@ -35,33 +41,54 @@
                     <div class="mb-3">
                         <input type="text" wire:model.defer="first_name" class="form-control"
                             placeholder="First Name" required>
+                        @error('first_name')
+                            <div class="text-danger small">{{ $message }}</div>
+                        @enderror
                     </div>
                     <div class="mb-3">
                         <input type="text" wire:model.defer="last_name" class="form-control" placeholder="Last Name"
                             required>
+                        @error('last_name')
+                            <div class="text-danger small">{{ $message }}</div>
+                        @enderror
                     </div>
                     <div class="mb-3">
                         <input type="text" wire:model.defer="national_id_number" class="form-control"
                             placeholder="National ID Number" required>
+                        @error('national_id_number')
+                            <div class="text-danger small">{{ $message }}</div>
+                        @enderror
                     </div>
                     <div class="mb-3">
                         <select wire:model.defer="role" class="form-select" required>
                             <option value="patient">Patient</option>
                             <option value="doctor">Doctor</option>
                         </select>
+                        @error('role')
+                            <div class="text-danger small">{{ $message }}</div>
+                        @enderror
                     </div>
                     <div class="mb-3">
                         <input type="email" wire:model.defer="email" class="form-control" placeholder="Email"
                             required>
+                        @error('email')
+                            <div class="text-danger small">{{ $message }}</div>
+                        @enderror
                     </div>
                     <div class="mb-3">
                         <input type="{{ $show_password ? 'text' : 'password' }}" wire:model.defer="password"
                             class="form-control" placeholder="Password" required>
+                        @error('password')
+                            <div class="text-danger small">{{ $message }}</div>
+                        @enderror
                     </div>
                     <div class="mb-3">
                         <input type="{{ $show_password ? 'text' : 'password' }}"
                             wire:model.defer="password_confirmation" class="form-control" placeholder="Confirm Password"
                             required>
+                        @error('password_confirmation')
+                            <div class="text-danger small">{{ $message }}</div>
+                        @enderror
                         <div class="form-check mt-2">
                             <input class="form-check-input" type="checkbox"
                                 wire:model.live.debounce.10ms="show_password" id="showPasswordReg">
@@ -86,6 +113,9 @@
                     <div class="mb-3">
                         <input type="email" wire:model.defer="email" class="form-control" placeholder="Email address"
                             required>
+                        @error('email')
+                            <div class="text-danger small">{{ $message }}</div>
+                        @enderror
                     </div>
                     <button class="btn btn-primary w-100" wire:loading.attr="disabled">
                         <span wire:loading.remove wire:target="sendPasswordResetLink">Send Reset Link</span>
@@ -110,15 +140,24 @@
                     <div class="mb-3">
                         <input type="email" wire:model.defer="email" class="form-control" placeholder="Email"
                             readonly>
+                        @error('email')
+                            <div class="text-danger small">{{ $message }}</div>
+                        @enderror
                     </div>
                     <div class="mb-3">
                         <input type="{{ $show_password ? 'text' : 'password' }}" wire:model.defer="new_password"
                             class="form-control" placeholder="New Password" required>
+                        @error('new_password')
+                            <div class="text-danger small">{{ $message }}</div>
+                        @enderror
                     </div>
                     <div class="mb-3">
                         <input type="{{ $show_password ? 'text' : 'password' }}"
                             wire:model.defer="new_password_confirmation" class="form-control"
                             placeholder="Confirm Password" required>
+                        @error('new_password_confirmation')
+                            <div class="text-danger small">{{ $message }}</div>
+                        @enderror
                         <div class="form-check mt-2">
                             <input class="form-check-input" type="checkbox"
                                 wire:model.live.debounce.10ms="show_password" id="showResetPassword">
