@@ -18,8 +18,7 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::prefix('doctor')->as('doctor.')->group(function () {
-        Route::get('/dashboard', DashboardLivewire::class)->name('dashboard');
-        Route::get('/submit-diagnosis', SubmitDiagnosisLivewire::class)->name('submit-diagnosis');
+        Route::get('/submit-diagnosis', SubmitDiagnosisLivewire::class)->name('submit.diagnosis');
     });
 });
 
