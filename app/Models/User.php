@@ -57,4 +57,15 @@ class User extends Authenticatable
     {
         return $this->hasMany(DiagnosisRequest::class, 'patient_id');
     }
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class);
+    }
+
+    public function hasRole($role)
+    {
+        return $this->roles()->where('name', $role)->exists();
+    }
+
 }

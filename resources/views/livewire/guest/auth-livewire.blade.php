@@ -60,15 +60,6 @@
                         @enderror
                     </div>
                     <div class="mb-3">
-                        <select wire:model.defer="role" class="form-select" required>
-                            <option value="patient">Patient</option>
-                            <option value="doctor">Doctor</option>
-                        </select>
-                        @error('role')
-                            <div class="text-danger small">{{ $message }}</div>
-                        @enderror
-                    </div>
-                    <div class="mb-3">
                         <input type="email" wire:model.defer="email" class="form-control" placeholder="Email"
                             required>
                         @error('email')

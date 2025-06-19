@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Guest;
 
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -85,7 +86,6 @@ class AuthLivewire extends Component
             'last_name' => 'required|string|max:100',
             'national_id_number' => 'required|regex:/^\d{8,9}[A-Z]\d{2}$/|unique:users,national_id_number',
             'email' => 'required|email|unique:users,email',
-            'role' => 'required|in:doctor,patient',
             'password' => 'required|string|min:6|confirmed',
         ], ['national_id_number.regex' => 'The :attribute must be in the format NNNNNNNNLNN or NNNNNNNNNLNN where N is a Number and L a capital letter']);
 
@@ -94,9 +94,12 @@ class AuthLivewire extends Component
             'last_name' => $this->last_name,
             'national_id_number' => $this->national_id_number,
             'email' => $this->email,
-            'role' => $this->role,
             'password' => Hash::make($this->password),
         ]);
+
+        // Assign role
+        $role = Role::where('name', 'patient')->first();
+        $user->roles()->attach($role->id);
 
         Auth::login($user);
         return redirect('/patient/dashboard');

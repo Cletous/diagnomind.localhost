@@ -19,8 +19,8 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // Inside run() method after creating users
-        $doctor = User::where('national_id_number', '631234567Y82', )->first();
-        $patient = User::where('national_id_number', '631234567A82', )->first();
+        $doctor = User::where('national_id_number', '631631768T27', )->first();
+        $patient = User::where('national_id_number', '63163176T27', )->first();
 
         DiagnosisRequest::create([
             'doctor_id' => $doctor->id,
