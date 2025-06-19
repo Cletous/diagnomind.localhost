@@ -1,14 +1,11 @@
 <?php
 
 use App\Livewire\Doctor\SubmitDiagnosisLivewire;
+use App\Livewire\Guest\HomeLivewire;
 use App\Livewire\Patient\DashboardLivewire;
 use Illuminate\Support\Facades\Route;
 
-Route::view('/', 'guest.home')->name('home');
-
-Route::view('dashboard', 'dashboard')
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
+Route::get('/', HomeLivewire::class)->name('home');
 
 Route::view('profile', 'profile')
     ->middleware(['auth'])
@@ -21,6 +18,7 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::prefix('doctor')->as('doctor.')->group(function () {
+        Route::get('/dashboard', DashboardLivewire::class)->name('dashboard');
         Route::get('/submit-diagnosis', SubmitDiagnosisLivewire::class)->name('submit-diagnosis');
     });
 });

@@ -8,6 +8,7 @@ class HomeLivewire extends Component
 {
     public function render()
     {
-        return view('livewire.guest.home-livewire');
+        return view('livewire.guest.home-livewire')
+            ->layoutData(['title' => 'Welcome to DiagnoMind']);
     }
 }

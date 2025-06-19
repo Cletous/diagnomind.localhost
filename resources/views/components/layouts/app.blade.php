@@ -1,4 +1,3 @@
-<!-- resources/views/components/layouts/app.blade.php -->
 <!DOCTYPE html>
 <html lang="en">
 
