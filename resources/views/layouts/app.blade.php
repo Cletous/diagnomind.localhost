@@ -1,19 +1,17 @@
-<!-- resources/views/layouts/app.blade.php -->
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
-    <title>DiagnoMind</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>{{ !empty($title) ? $title . ' - ' . config('app.name') : config('app.name') }} &reg;
+    </title>
+    <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/icons/bootstrap-icons/bootstrap-icons.min.css') }}" rel="stylesheet">
+    @livewireStyles
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
-        <div class="container">
-            <a class="navbar-brand" href="#">DiagnoMind</a>
-        </div>
-    </nav>
+    @includeIf('components.layouts.main.header')
 
     <main class="container py-4">
         @yield('content')

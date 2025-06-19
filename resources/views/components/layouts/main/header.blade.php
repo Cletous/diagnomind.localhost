@@ -14,6 +14,11 @@
         <div class="collapse navbar-collapse justify-content-end" id="navbarContent">
             @auth
                 <a href="{{ route('patient.dashboard') }}" class="btn btn-outline-primary me-2">Dashboard</a>
+
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit" class="btn btn-outline-danger">Logout</button>
+                </form>
             @else
                 <a href="{{ route('login') }}" class="btn btn-outline-primary me-2">Login</a>
                 <a href="{{ route('register') }}" class="btn btn-primary">Register</a>
