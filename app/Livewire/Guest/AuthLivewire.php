@@ -31,8 +31,8 @@ class AuthLivewire extends Component
     public $new_password;
     public $new_password_confirmation;
 
-    // Extra
-    public $country_of_signup_ip;
+    // Steps
+    public int $registerStep = 1;
 
     public function mount()
     {
@@ -89,15 +89,36 @@ class AuthLivewire extends Component
         session()->flash('error', 'Invalid credentials');
     }
 
+    public function nextStep()
+    {
+        $this->validate($this->getValidationRulesForStep());
+        $this->registerStep++;
+    }
+
+    public function previousStep()
+    {
+        $this->registerStep = max(1, $this->registerStep - 1);
+    }
+
+    public function getValidationRulesForStep()
+    {
+        return match ($this->registerStep) {
+            1 => ['first_name' => 'required|string|max:100'],
+            2 => [
+                'last_name' => 'required|string|max:100',
+                'national_id_number' => 'required|regex:/^\d{8,9}[A-Z]\d{2}$/|unique:users,national_id_number',
+            ],
+            3 => [
+                'email' => 'required|email|unique:users,email',
+                'password' => 'required|string|min:6|confirmed',
+            ],
+            default => [],
+        };
+    }
+
     public function register()
     {
-        $this->validate([
-            'first_name' => 'required|string|max:100',
-            'last_name' => 'required|string|max:100',
-            'national_id_number' => 'required|regex:/^\d{8,9}[A-Z]\d{2}$/|unique:users,national_id_number',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|string|min:6|confirmed',
-        ], ['national_id_number.regex' => 'The :attribute must be in the format NNNNNNNNLNN or NNNNNNNNNLNN where N is a Number and L a capital letter']);
+        $this->validate($this->getValidationRulesForStep());
 
         $user = User::create([
             'first_name' => $this->first_name,
@@ -110,9 +131,9 @@ class AuthLivewire extends Component
         $role = Role::where('name', 'patient')->first();
         $user->roles()->attach($role->id);
 
-        event(new Registered($user)); // sends email verification
-
+        event(new Registered($user));
         Auth::login($user);
+
         return redirect()->route('verification.notice');
     }
 
