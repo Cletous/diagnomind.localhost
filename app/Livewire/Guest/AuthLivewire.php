@@ -125,11 +125,13 @@ class AuthLivewire extends Component
 
         $this->storeStepData();
         $this->registerStep++;
+        $this->hydrateFromSession();
     }
 
     public function previousStep()
     {
         $this->registerStep = max(1, $this->registerStep - 1);
+        $this->hydrateFromSession();
     }
 
     protected function storeStepData()
