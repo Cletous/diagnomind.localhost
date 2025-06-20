@@ -11,6 +11,8 @@
 </head>
 
 <body>
+
+    @includeIf('components.toasts._messages')
     @includeIf('components.layouts.main.header')
 
     <main class="container py-4">

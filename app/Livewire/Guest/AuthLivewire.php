@@ -40,7 +40,15 @@ class AuthLivewire extends Component
         }
 
         if (Auth::check()) {
-            return redirect()->intended('/patient/dashboard');
+            $user = Auth::user();
+
+            if ($user->roles->contains('name', 'admin')) {
+                return redirect()->intended(route('admin.dashboard'));
+            } elseif ($user->roles->contains('name', 'doctor')) {
+                return redirect()->intended(route('doctor.dashboard'));
+            } else {
+                return redirect()->intended(route('patient.dashboard'));
+            }
         }
 
         if (request()->routeIs('login')) {
@@ -77,12 +85,14 @@ class AuthLivewire extends Component
 
             $user = Auth::user();
 
+            session()->flash('success', 'Login Successful');
+
             if ($user->roles->contains('name', 'admin')) {
-                return redirect('/admin/dashboard');
+                return redirect()->intended(route('admin.dashboard'));
             } elseif ($user->roles->contains('name', 'doctor')) {
-                return redirect('/doctor/dashboard');
+                return redirect()->intended(route('doctor.dashboard'));
             } else {
-                return redirect('/patient/dashboard');
+                return redirect()->intended(route('patient.dashboard'));
             }
         }
 
