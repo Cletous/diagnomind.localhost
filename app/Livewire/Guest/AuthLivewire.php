@@ -224,5 +224,4 @@ class AuthLivewire extends Component
             $this->password_confirmation = $data['password_confirmation'] ?? null;
         }
     }
-
 }
