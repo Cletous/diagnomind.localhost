@@ -7,12 +7,12 @@ use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Password;
 use Livewire\Component;
 
 class AuthLivewire extends Component
 {
-    public string $mode = 'login'; // Default
+    public string $mode = 'login';
 
     // Shared
     public $email;
@@ -31,7 +31,6 @@ class AuthLivewire extends Component
     public $new_password;
     public $new_password_confirmation;
 
-    // Steps
     public int $registerStep = 1;
 
     public function mount()
@@ -48,6 +47,15 @@ class AuthLivewire extends Component
             $this->mode = 'login';
         } elseif (request()->routeIs('register')) {
             $this->mode = 'register';
+
+            // Load session data for register steps
+            $data = session('register_data', []);
+            $this->first_name = $data['first_name'] ?? null;
+            $this->last_name = $data['last_name'] ?? null;
+            $this->national_id_number = $data['national_id_number'] ?? null;
+            $this->email = $data['email'] ?? null;
+            $this->password = $data['password'] ?? null;
+            $this->password_confirmation = $data['password_confirmation'] ?? null;
         } elseif (request()->routeIs('forget_password')) {
             $this->mode = 'forget_password';
         } elseif (request()->routeIs('password.reset')) {
@@ -55,7 +63,6 @@ class AuthLivewire extends Component
             $this->reset_token = request()->get('token');
             $this->email = request()->get('email');
         }
-
     }
 
     public function render()
@@ -76,7 +83,6 @@ class AuthLivewire extends Component
 
             $user = Auth::user();
 
-            // Redirect based on role
             if ($user->roles->contains('name', 'admin')) {
                 return redirect('/admin/dashboard');
             } elseif ($user->roles->contains('name', 'doctor')) {
@@ -87,11 +93,6 @@ class AuthLivewire extends Component
         }
 
         session()->flash('error', 'Invalid credentials');
-    }
-
-    public function previousStep()
-    {
-        $this->registerStep = max(1, $this->registerStep - 1);
     }
 
     public function getValidationRulesForStep()
@@ -128,7 +129,31 @@ class AuthLivewire extends Component
             $this->getValidationMessagesForStep()
         );
 
+        $this->storeStepData();
         $this->registerStep++;
+    }
+
+    public function previousStep()
+    {
+        $this->registerStep = max(1, $this->registerStep - 1);
+    }
+
+    protected function storeStepData()
+    {
+        $data = session('register_data', []);
+
+        if ($this->registerStep === 1) {
+            $data['first_name'] = $this->first_name;
+        } elseif ($this->registerStep === 2) {
+            $data['last_name'] = $this->last_name;
+            $data['national_id_number'] = $this->national_id_number;
+        } elseif ($this->registerStep === 3) {
+            $data['email'] = $this->email;
+            $data['password'] = $this->password;
+            $data['password_confirmation'] = $this->password_confirmation;
+        }
+
+        session(['register_data' => $data]);
     }
 
     public function register()
@@ -138,16 +163,22 @@ class AuthLivewire extends Component
             $this->getValidationMessagesForStep()
         );
 
+        $this->storeStepData();
+
+        $data = session('register_data');
+
         $user = User::create([
-            'first_name' => $this->first_name,
-            'last_name' => $this->last_name,
-            'national_id_number' => $this->national_id_number,
-            'email' => $this->email,
-            'password' => Hash::make($this->password),
+            'first_name' => $data['first_name'],
+            'last_name' => $data['last_name'],
+            'national_id_number' => $data['national_id_number'],
+            'email' => $data['email'],
+            'password' => Hash::make($data['password']),
         ]);
 
         $role = Role::where('name', 'patient')->first();
         $user->roles()->attach($role->id);
+
+        session()->forget('register_data');
 
         event(new Registered($user));
         Auth::login($user);
@@ -159,17 +190,18 @@ class AuthLivewire extends Component
     {
         $this->validate([
             'email' => 'required|email|exists:users,email',
-        ], ['email.exists' => 'The :attribute is not found in our database.'], );
+        ], [
+            'email.exists' => 'The :attribute is not found in our database.',
+        ]);
 
         try {
-            \Illuminate\Support\Facades\Password::sendResetLink(['email' => $this->email]);
+            Password::sendResetLink(['email' => $this->email]);
 
             session()->flash('success', 'Password reset link sent! Please check your inbox.');
         } catch (\Throwable $e) {
-            session()->flash('error', 'Failed to send password reset link. Try again later. Error: ' . $e);
+            session()->flash('error', 'Failed to send password reset link. Try again later.');
         }
     }
-
 
     public function logout()
     {
