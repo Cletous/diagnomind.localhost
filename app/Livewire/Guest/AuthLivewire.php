@@ -48,14 +48,8 @@ class AuthLivewire extends Component
         } elseif (request()->routeIs('register')) {
             $this->mode = 'register';
 
-            // Load session data for register steps
-            $data = session('register_data', []);
-            $this->first_name = $data['first_name'] ?? null;
-            $this->last_name = $data['last_name'] ?? null;
-            $this->national_id_number = $data['national_id_number'] ?? null;
-            $this->email = $data['email'] ?? null;
-            $this->password = $data['password'] ?? null;
-            $this->password_confirmation = $data['password_confirmation'] ?? null;
+            // Only load session values into each field at the correct step
+            $this->hydrateFromSession();
         } elseif (request()->routeIs('forget_password')) {
             $this->mode = 'forget_password';
         } elseif (request()->routeIs('password.reset')) {
