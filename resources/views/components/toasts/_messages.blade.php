@@ -9,11 +9,13 @@
             },
             showConfirmButton: false,
             showCloseButton: true,
-        })
+            timer: 4000,
+            timerProgressBar: true,
+        });
         Toast.fire({
             icon: 'success',
-            title: "{{ session('success') }}",
-        })
+            title: @json(session('success')),
+        });
     </script>
 @endif
 
@@ -28,13 +30,16 @@
             },
             showConfirmButton: false,
             showCloseButton: true,
-        })
+            timer: 4000,
+            timerProgressBar: true,
+        });
         Toast.fire({
             icon: 'error',
-            title: "{{ session('error') }}",
-        })
+            title: @json(session('error')),
+        });
     </script>
 @endif
+
 
 @if (!empty(session('alert')))
     <script>
@@ -43,31 +48,45 @@
 @endif
 
 @if (!empty(session('warning')))
-    <div class="position-relative">
-        <div style="z-index:9991; top:150px"
-            class="toast align-items-center fade show position-absolute start-50 translate-middle bg-warning shadow"
-            role="alert" aria-live="assertive" aria-atomic="true">
-            <div class="d-flex">
-                <div class="toast-body text-white">{{ session('warning') }}</div>
-                <button type="button" class="btn-close me-2 m-auto btn-close-white" data-bs-dismiss="toast"
-                    aria-label="Close"></button>
-            </div>
-        </div>
-    </div>
+    <script>
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'center',
+            iconColor: 'white',
+            customClass: {
+                popup: 'colored-toast',
+            },
+            showConfirmButton: false,
+            showCloseButton: true,
+            timer: 4000,
+            timerProgressBar: true,
+        });
+        Toast.fire({
+            icon: 'warning',
+            title: @json(session('warning')),
+        });
+    </script>
 @endif
 
 @if (!empty(session('info')))
-    <div class="position-relative">
-        <div style="z-index:9991; top:150px"
-            class="toast align-items-center fade show position-absolute start-50 translate-middle bg-info shadow"
-            role="alert" aria-live="assertive" aria-atomic="true">
-            <div class="d-flex">
-                <div class="toast-body text-white">{{ session('info') }}</div>
-                <button type="button" class="btn-close me-2 m-auto btn-close-white" data-bs-dismiss="toast"
-                    aria-label="Close"></button>
-            </div>
-        </div>
-    </div>
+    <script>
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'center',
+            iconColor: 'white',
+            customClass: {
+                popup: 'colored-toast',
+            },
+            showConfirmButton: false,
+            showCloseButton: true,
+            timer: 4000,
+            timerProgressBar: true,
+        });
+        Toast.fire({
+            icon: 'info',
+            title: @json(session('info')),
+        });
+    </script>
 @endif
 
 @if (!empty(session('secondary')))
