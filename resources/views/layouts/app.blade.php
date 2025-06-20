@@ -22,6 +22,8 @@
     <main class="container py-4">
         @yield('content')
     </main>
+
+    @stack('scripts')
 </body>
 
 </html>
