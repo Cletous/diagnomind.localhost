@@ -206,4 +206,21 @@ class AuthLivewire extends Component
         session()->flash('success', 'You have been logged out.');
         return redirect()->route('login');
     }
+
+    protected function hydrateFromSession()
+    {
+        $data = session('register_data', []);
+
+        if ($this->registerStep === 1 && isset($data['first_name'])) {
+            $this->first_name = $data['first_name'];
+        } elseif ($this->registerStep === 2) {
+            $this->last_name = $data['last_name'] ?? null;
+            $this->national_id_number = $data['national_id_number'] ?? null;
+        } elseif ($this->registerStep === 3) {
+            $this->email = $data['email'] ?? null;
+            $this->password = $data['password'] ?? null;
+            $this->password_confirmation = $data['password_confirmation'] ?? null;
+        }
+    }
+
 }
