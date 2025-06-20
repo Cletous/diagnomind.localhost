@@ -38,7 +38,8 @@
                             {{-- REGISTER --}}
                         @elseif($mode === 'register')
                             <h3 class="mb-4">Register - Step {{ $registerStep }} of 3</h3>
-                            <form wire:submit.prevent="{{ $registerStep === 3 ? 'register' : 'nextStep' }}">
+                            <form wire:submit.prevent="{{ $registerStep === 3 ? 'register' : 'nextStep' }}"
+                                wire:key="register-step-{{ $registerStep }}">
                                 @if ($registerStep === 1)
                                     <x-auth.input type="text" model="first_name" label="First Name" />
                                 @elseif($registerStep === 2)
