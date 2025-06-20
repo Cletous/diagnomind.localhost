@@ -7,7 +7,7 @@ use Livewire\Component;
 use App\Models\DiagnosisRequest;
 use Illuminate\Support\Facades\Auth;
 
-class DashboardLivewire extends Component
+class PatientDashboardLivewire extends Component
 {
     public $diagnoses;
 
