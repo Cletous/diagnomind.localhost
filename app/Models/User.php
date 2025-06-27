@@ -69,4 +69,14 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->roles()->where('name', $role)->exists();
     }
 
+    public function hospitals()
+    {
+        return $this->belongsToMany(Hospital::class, 'hospital_doctor', 'doctor_id', 'hospital_id')->withTimestamps();
+    }
+
+    public function hospitalsAdministered()
+    {
+        return $this->hasMany(Hospital::class, 'admin_id');
+    }
+
 }

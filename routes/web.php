@@ -1,6 +1,7 @@
 <?php
 
 use App\Livewire\Doctor\DoctorDashboardLivewire;
+use App\Livewire\Doctor\HospitalLivewire;
 use App\Livewire\Doctor\SubmitDiagnosisLivewire;
 use App\Livewire\Guest\HomeLivewire;
 use App\Livewire\Patient\PatientDashboardLivewire;
@@ -22,6 +23,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/dashboard', DoctorDashboardLivewire::class)->name('dashboard');
 
         Route::get('/submit-diagnosis', SubmitDiagnosisLivewire::class)->name('submit.diagnosis');
+
+        Route::get('/hospitals', HospitalLivewire::class)->name('hospitals.index');
+        Route::get('/hospitals/create', HospitalLivewire::class)->name('hospitals.create');
+        Route::get('/hospitals/{hospital}/edit', HospitalLivewire::class)->name('hospitals.edit');
+        Route::get('/hospitals/{hospital}/invite', HospitalLivewire::class)->name('hospitals.invite');
     });
 
     Route::prefix('admin')->as('admin.')->group(function () {
