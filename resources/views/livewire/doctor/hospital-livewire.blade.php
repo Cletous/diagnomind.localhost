@@ -53,5 +53,34 @@
             <button type="submit" class="btn btn-primary">Send Invite</button>
             <a href="{{ route('doctor.hospitals.index') }}" class="btn btn-secondary ms-2">Back</a>
         </form>
+
+        {{-- List of Invited Doctors --}}
+        <div class="mt-5">
+            <h5>Doctors Assigned to This Hospital</h5>
+            @if ($invitedDoctors && count($invitedDoctors))
+                <table class="table table-bordered table-sm mt-3">
+                    <thead class="table-light">
+                        <tr>
+                            <th>#</th>
+                            <th>Doctor Name</th>
+                            <th>Email</th>
+                            <th>Joined</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($invitedDoctors as $index => $doctor)
+                            <tr>
+                                <td>{{ $index + 1 }}</td>
+                                <td>{{ $doctor->first_name }} {{ $doctor->last_name }}</td>
+                                <td>{{ $doctor->email }}</td>
+                                <td>{{ $doctor->created_at->diffForHumans() }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            @else
+                <p class="text-muted mt-3">No doctors have been invited to this hospital yet.</p>
+            @endif
+        </div>
     @endif
 </div>

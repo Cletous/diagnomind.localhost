@@ -19,6 +19,7 @@ class HospitalLivewire extends Component
     public $address;
 
     public $inviteEmail;
+    public $invitedDoctors = [];
 
     public function mount($hospital = null)
     {
@@ -30,6 +31,10 @@ class HospitalLivewire extends Component
         } elseif (request()->routeIs('doctor.hospitals.invite')) {
             $this->mode = 'invite';
             $this->hospital = $hospital;
+
+            $this->invitedDoctors = $hospital->doctors()
+                ->orderBy('first_name')
+                ->get(['id', 'first_name', 'last_name', 'email', 'created_at']);
         } else {
             $this->mode = 'index';
             $this->hospitals = Auth::user()->hospitals()->get();
