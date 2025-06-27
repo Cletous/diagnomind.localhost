@@ -42,6 +42,12 @@
                     <small class="text-muted">Submitted {{ $diagnosis->created_at->diffForHumans() }}</small>
                 </p>
 
+                {{-- Feedback Button --}}
+                <button class="btn btn-sm btn-outline-primary mt-2"
+                    wire:click="$emit('openFeedbackModal', {{ $diagnosis->id }})">
+                    Rate / Feedback
+                </button>
+
                 {{-- Optional feedback display --}}
                 @if ($diagnosis->feedback)
                     <div class="mt-2">
@@ -54,4 +60,8 @@
     @empty
         <p class="text-muted">You have no past diagnoses yet.</p>
     @endforelse
+
+    {{-- Include feedback modal component at the bottom of the page --}}
+    @livewire('patient.diagnosis-feedback-livewire')
+
 </div>
