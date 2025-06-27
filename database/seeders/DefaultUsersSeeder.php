@@ -40,14 +40,17 @@ class DefaultUsersSeeder extends Seeder
         ]);
         $patient->roles()->syncWithoutDetaching([$patientRole->id]);
 
-        // Add 20 more test patients
+        // Create 20 test users
         for ($i = 1; $i <= 20; $i++) {
+            $email = "user{$i}@test.com";
+            $nationalId = '1000000' . str_pad($i, 2, '0', STR_PAD_LEFT) . 'T' . str_pad($i, 2, '0', STR_PAD_LEFT);
+
             $user = User::updateOrCreate([
-                'email' => "user{$i}@test.com"
+                'email' => $email,
             ], [
                 'first_name' => 'User',
-                'last_name' => $i,
-                'national_id_number' => 'TESTID' . str_pad($i, 4, '0', STR_PAD_LEFT),
+                'last_name' => (string) $i,
+                'national_id_number' => $nationalId,
                 'password' => Hash::make('password'),
                 'email_verified_at' => now(),
             ]);
