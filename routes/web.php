@@ -5,6 +5,7 @@ use App\Livewire\Doctor\HospitalLivewire;
 use App\Livewire\Doctor\SubmitDiagnosisLivewire;
 use App\Livewire\Guest\HomeLivewire;
 use App\Livewire\Patient\PatientDashboardLivewire;
+use App\Models\Hospital;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomeLivewire::class)->name('home');
@@ -26,8 +27,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
         Route::get('/hospitals', HospitalLivewire::class)->name('hospitals.index');
         Route::get('/hospitals/create', HospitalLivewire::class)->name('hospitals.create');
-        Route::get('/hospitals/{hospital}/edit', HospitalLivewire::class)->name('hospitals.edit');
-        Route::get('/hospitals/{hospital}/invite', HospitalLivewire::class)->name('hospitals.invite');
+        Route::get('/hospitals/{hospital}/edit', HospitalLivewire::class)->name('hospitals.edit')->can('update', [Hospital::class, '{hospital}' => 'hospital']);
+        Route::get('/hospitals/{hospital}/invite', HospitalLivewire::class)->name('hospitals.invite')->can('invite', [Hospital::class, '{hospital}' => 'hospital']);
     });
 
     Route::prefix('admin')->as('admin.')->group(function () {

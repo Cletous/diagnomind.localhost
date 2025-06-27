@@ -34,7 +34,7 @@
             <button type="submit" class="btn btn-success">{{ $mode === 'create' ? 'Create' : 'Update' }}</button>
         </form>
     @elseif ($mode === 'invite')
-        <h3>Invite Doctor to Hospital #{{ $hospitalId }}</h3>
+        <h3>Invite Doctor to Hospital: {{ $hospital->name }}</h3>
 
         @if (session()->has('success'))
             <div class="alert alert-success">{{ session('success') }}</div>

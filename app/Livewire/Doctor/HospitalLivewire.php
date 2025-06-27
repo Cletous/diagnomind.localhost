@@ -10,6 +10,8 @@ use Livewire\Component;
 
 class HospitalLivewire extends Component
 {
+    public Hospital|null $hospital;
+
     public $mode = 'index'; // 'create', 'edit', 'invite'
     public $hospitals;
     public $hospitalId;
@@ -27,7 +29,7 @@ class HospitalLivewire extends Component
             $this->loadHospital($hospital);
         } elseif (request()->routeIs('doctor.hospitals.invite')) {
             $this->mode = 'invite';
-            $this->hospitalId = $hospital?->id;
+            $this->hospital = $hospital;
         } else {
             $this->mode = 'index';
             $this->hospitals = Auth::user()->hospitals()->get();
