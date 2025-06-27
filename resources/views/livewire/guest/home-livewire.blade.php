@@ -30,7 +30,7 @@
 
             @if (auth()->check())
                 <a href="{{ route(name: 'patient.dashboard') }}" class="btn btn-primary mt-4">Dashboard</a>
-                <a href="{{ route(name: 'doctor.submit.diagnosis') }}" class="btn btn-outline-primary mt-4">Diagnose
+                <a href="{{ route(name: 'doctor.get.diagnosis') }}" class="btn btn-outline-primary mt-4">Diagnose
                     Patients</a>
             @else
                 <a href="{{ route('login') }}" class="btn btn-primary mt-4">Login to Start Diagnosing</a>

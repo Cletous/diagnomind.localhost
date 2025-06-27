@@ -1,5 +1,5 @@
 <div class="container mt-4">
-    <h3>Submit Diagnosis</h3>
+    <h3>Get AI Diagnosis</h3>
 
     @if ($submitted)
         <div class="alert alert-success">Diagnosis submitted successfully.</div>
@@ -8,7 +8,7 @@
     <form wire:submit.prevent="findPatient" class="mb-4">
         <div class="mb-3">
             <label>Patient National ID</label>
-            <input type="text" wire:model="national_id_number" class="form-control">
+            <input type="text" wire:model="national_id_number" class="form-control" autocomplete="national_id_number">
             @error('national_id_number')
                 <span class="text-danger">{{ $message }}</span>
             @enderror

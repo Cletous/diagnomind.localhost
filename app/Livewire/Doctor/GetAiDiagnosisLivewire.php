@@ -7,7 +7,7 @@ use App\Models\DiagnosisRequest;
 use Illuminate\Support\Facades\Http;
 use Livewire\Component;
 
-class SubmitDiagnosisLivewire extends Component
+class GetAiDiagnosisLivewire extends Component
 {
     public $national_id_number;
     public $patient;
@@ -69,6 +69,6 @@ class SubmitDiagnosisLivewire extends Component
 
     public function render()
     {
-        return view('livewire.doctor.submit-diagnosis');
+        return view('livewire.doctor.get-ai-diagnosis');
     }
 }
