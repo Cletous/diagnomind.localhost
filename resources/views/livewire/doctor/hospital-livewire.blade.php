@@ -35,7 +35,23 @@
         </form>
     @elseif ($mode === 'invite')
         <h3>Invite Doctor to Hospital #{{ $hospitalId }}</h3>
-        {{-- You can add email invite form here later --}}
-        <p>Feature coming soon.</p>
+
+        @if (session()->has('success'))
+            <div class="alert alert-success">{{ session('success') }}</div>
+        @endif
+
+        <form wire:submit.prevent="invite" class="mt-3">
+            <div class="mb-3">
+                <label class="form-label">Doctor's Email</label>
+                <input type="email" wire:model.defer="inviteEmail" class="form-control"
+                    placeholder="doctor@example.com">
+                @error('inviteEmail')
+                    <small class="text-danger">{{ $message }}</small>
+                @enderror
+            </div>
+
+            <button type="submit" class="btn btn-primary">Send Invite</button>
+            <a href="{{ route('doctor.hospitals.index') }}" class="btn btn-secondary ms-2">Back</a>
+        </form>
     @endif
 </div>

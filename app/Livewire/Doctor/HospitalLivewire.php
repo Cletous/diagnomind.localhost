@@ -3,7 +3,9 @@
 namespace App\Livewire\Doctor;
 
 use App\Models\Hospital;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 use Livewire\Component;
 
 class HospitalLivewire extends Component
@@ -13,6 +15,8 @@ class HospitalLivewire extends Component
     public $hospitalId;
     public $name;
     public $address;
+
+    public $inviteEmail;
 
     public function mount($hospital = null)
     {
@@ -71,6 +75,31 @@ class HospitalLivewire extends Component
 
         session()->flash('success', 'Hospital updated successfully.');
         return redirect()->route('doctor.hospitals.index');
+    }
+
+    public function invite()
+    {
+        $this->validate([
+            'inviteEmail' => 'required|email|exists:users,email',
+        ]);
+
+        $doctor = User::where('email', $this->inviteEmail)->firstOrFail();
+
+        // Check if already added
+        $hospital = Hospital::findOrFail($this->hospitalId);
+        if ($hospital->doctors()->where('doctor_id', $doctor->id)->exists()) {
+            throw ValidationException::withMessages([
+                'inviteEmail' => 'This doctor is already part of this hospital.',
+            ]);
+        }
+
+        // Attach doctor
+        $hospital->doctors()->attach($doctor->id);
+
+        // Optionally: fire an event or notification
+
+        $this->reset('inviteEmail');
+        session()->flash('success', 'Doctor invited successfully.');
     }
 
     public function render()

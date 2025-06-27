@@ -6,7 +6,7 @@
             <small class="text-muted">Here’s your overview dashboard.</small>
         </div>
         <div>
-            <a href="{{ route('doctor.hospitals.create') }}" class="btn btn-outline-light btn-sm">
+            <a href="{{ route('doctor.hospitals.create') }}" class="btn btn-outline-primary btn-sm">
                 <i class="bi bi-hospital"></i> Create New Hospital
             </a>
         </div>
@@ -24,7 +24,7 @@
                     <i class="bi bi-building text-primary fs-1"></i>
                 </div>
                 <div class="card-footer bg-transparent border-0">
-                    <a href="{{ route('doctor.hospitals.index') }}" class="btn btn-link btn-sm">Manage Hospitals</a>
+                    <a href="{{ route('doctor.hospitals.index') }}" class="btn btn-primary btn-sm">Manage Hospitals</a>
                 </div>
             </div>
         </div>
@@ -39,7 +39,7 @@
                     <i class="bi bi-people-fill text-success fs-1"></i>
                 </div>
                 <div class="card-footer bg-transparent border-0">
-                    <a href="{{ route('doctor.submit.diagnosis') }}" class="btn btn-link btn-sm">Submit New
+                    <a href="{{ route('doctor.submit.diagnosis') }}" class="btn btn-success btn-sm">Submit New
                         Diagnosis</a>
                 </div>
             </div>
