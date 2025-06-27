@@ -22,7 +22,6 @@ class SubmitDiagnosisLivewire extends Component
         ]);
 
         $this->patient = User::where('national_id_number', $this->national_id_number)
-            ->where('role', 'patient')
             ->first();
 
         if (!$this->patient) {
