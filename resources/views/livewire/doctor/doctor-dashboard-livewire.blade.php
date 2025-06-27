@@ -39,7 +39,7 @@
                     <i class="bi bi-people-fill text-success fs-1"></i>
                 </div>
                 <div class="card-footer bg-transparent border-0">
-                    <a href="{{ route('doctor.submit.diagnosis') }}" class="btn btn-success btn-sm">Submit New
+                    <a href="{{ route('doctor.get.diagnosis') }}" class="btn btn-success btn-sm">Submit New
                         Diagnosis</a>
                 </div>
             </div>
