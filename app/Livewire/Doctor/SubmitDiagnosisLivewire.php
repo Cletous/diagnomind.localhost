@@ -41,6 +41,14 @@ class SubmitDiagnosisLivewire extends Component
             return;
         }
 
+        // Fetch doctor’s primary hospital (you may enhance this with a dropdown later)
+        $hospital = auth()->user()->hospitals()->first();
+
+        if (!$hospital) {
+            $this->addError('prompt', 'You are not assigned to any hospital. Please contact admin.');
+            return;
+        }
+
         // Call AI API
         $response = Http::post('http://127.0.0.1:8000/predict', [
             'inputs' => $this->prompt,
@@ -54,6 +62,7 @@ class SubmitDiagnosisLivewire extends Component
             'patient_id' => $this->patient->id,
             'prompt' => $this->prompt,
             'ai_response' => $this->ai_response,
+            'hospital_id' => $hospital->id, // ✅ Link diagnosis to hospital
         ]);
 
         $this->submitted = true;

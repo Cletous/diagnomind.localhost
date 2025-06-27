@@ -4,6 +4,7 @@ use App\Livewire\Doctor\DoctorDashboardLivewire;
 use App\Livewire\Doctor\HospitalLivewire;
 use App\Livewire\Doctor\SubmitDiagnosisLivewire;
 use App\Livewire\Guest\HomeLivewire;
+use App\Livewire\Patient\DiagnosisHistoryLivewire;
 use App\Livewire\Patient\PatientDashboardLivewire;
 use App\Models\Hospital;
 use Illuminate\Support\Facades\Route;
@@ -18,6 +19,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::prefix('patient')->as('patient.')->group(function () {
         Route::get('/dashboard', PatientDashboardLivewire::class)->name('dashboard');
+        Route::get('/diagnosis-history', DiagnosisHistoryLivewire::class)->name('diagnosis.history');
     });
 
     Route::prefix('doctor')->as('doctor.')->group(function () {
