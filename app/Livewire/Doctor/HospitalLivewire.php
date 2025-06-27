@@ -34,7 +34,9 @@ class HospitalLivewire extends Component
 
             $this->invitedDoctors = $hospital->doctors()
                 ->orderBy('first_name')
-                ->get(['id', 'first_name', 'last_name', 'email', 'created_at']);
+                ->select('users.id', 'users.first_name', 'users.last_name', 'users.email', 'users.created_at')
+                ->get();
+
         } else {
             $this->mode = 'index';
             $this->hospitals = Auth::user()->hospitals()->get();
@@ -93,7 +95,7 @@ class HospitalLivewire extends Component
         $doctor = User::where('email', $this->inviteEmail)->firstOrFail();
 
         // Check if already added
-        $hospital = Hospital::findOrFail($this->hospitalId);
+        $hospital = Hospital::findOrFail($this->hospital->id);
         if ($hospital->doctors()->where('doctor_id', $doctor->id)->exists()) {
             throw ValidationException::withMessages([
                 'inviteEmail' => 'This doctor is already part of this hospital.',
@@ -107,6 +109,25 @@ class HospitalLivewire extends Component
 
         $this->reset('inviteEmail');
         session()->flash('success', 'Doctor invited successfully.');
+        return redirect()->route('doctor.hospitals.invite', $this->hospital->id);
+    }
+
+    public function removeDoctor($doctorId)
+    {
+        if ($this->hospital->admin_id !== Auth::id()) {
+            abort(403, 'Only the hospital administrator can remove doctors.');
+        }
+
+        // Prevent admin from removing themselves
+        if ($doctorId == Auth::id()) {
+            session()->flash('error', 'You cannot remove yourself as the hospital admin.');
+            return;
+        }
+
+        $this->hospital->doctors()->detach($doctorId);
+
+        session()->flash('success', 'Doctor removed successfully.');
+        return redirect()->route('doctor.hospitals.invite', $this->hospital->id);
     }
 
     public function render()

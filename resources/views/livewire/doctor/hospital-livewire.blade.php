@@ -39,6 +39,9 @@
         @if (session()->has('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
         @endif
+        @if (session()->has('error'))
+            <div class="alert alert-danger">{{ session('error') }}</div>
+        @endif
 
         <form wire:submit.prevent="invite" class="mt-3">
             <div class="mb-3">
@@ -65,8 +68,10 @@
                             <th>Doctor Name</th>
                             <th>Email</th>
                             <th>Joined</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
+
                     <tbody>
                         @foreach ($invitedDoctors as $index => $doctor)
                             <tr>
@@ -74,9 +79,18 @@
                                 <td>{{ $doctor->first_name }} {{ $doctor->last_name }}</td>
                                 <td>{{ $doctor->email }}</td>
                                 <td>{{ $doctor->created_at->diffForHumans() }}</td>
+                                <td>
+                                    <button wire:click="removeDoctor({{ $doctor->id }})"
+                                        class="btn btn-outline-danger btn-sm"
+                                        onclick="return confirm('Are you sure you want to remove this doctor?')"
+                                        @if ($doctor->id === auth()->id()) disabled @endif>
+                                        Remove
+                                    </button>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>
+
                 </table>
             @else
                 <p class="text-muted mt-3">No doctors have been invited to this hospital yet.</p>
