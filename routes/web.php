@@ -1,5 +1,6 @@
 <?php
 
+use App\Livewire\Admin\AdminDashboardLivewire;
 use App\Livewire\Doctor\DoctorDashboardLivewire;
 use App\Livewire\Doctor\GetAiDiagnosisLivewire;
 use App\Livewire\Doctor\HospitalLivewire;
@@ -8,6 +9,10 @@ use App\Livewire\Patient\DiagnosisHistoryLivewire;
 use App\Livewire\Patient\PatientDashboardLivewire;
 use App\Models\Hospital;
 use Illuminate\Support\Facades\Route;
+
+Route::fallback(function () {
+    return view('errors.404');
+});
 
 Route::get('/', HomeLivewire::class)->name('home');
 
@@ -35,7 +40,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 
     Route::middleware(['user_role:admin'])->prefix('admin')->as('admin.')->group(function () {
-        Route::get('/dashboard', DoctorDashboardLivewire::class)->name('dashboard');
+        Route::get('/dashboard', AdminDashboardLivewire::class)->name('dashboard');
     });
 });
 

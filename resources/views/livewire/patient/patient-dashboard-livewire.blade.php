@@ -2,7 +2,7 @@
     <div class="row mb-4">
         <div class="col">
             <h2 class="fw-bold">Welcome, {{ auth()->user()->first_name }} 👋</h2>
-            <p class="text-muted">Here’s a quick overview of your diagnosis activity.</p>
+            <p class="text-muted">Here’s a quick overview of your diagnosis activity. {{ sss }}</p>
         </div>
     </div>
 
