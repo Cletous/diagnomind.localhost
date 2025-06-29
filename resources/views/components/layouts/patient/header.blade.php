@@ -24,7 +24,7 @@
         @auth
             <a href="{{ route('patient.dashboard') }}" class="btn btn-outline-primary w-100 mb-2">Patient Dashboard</a>
 
-            <a href="{{ route('patient.diagnosis.history') }}" class="btn btn-outline-success w-100 mb-2">Diagnosis
+            <a href="{{ route('patient.diagnosis.history') }}" class="btn btn-outline-primary w-100 mb-2">Diagnosis
                 History</a>
 
             @if (auth()->user()->hasRole('doctor'))

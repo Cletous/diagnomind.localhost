@@ -24,7 +24,7 @@
         @auth
             <a href="{{ route('doctor.dashboard') }}" class="btn btn-outline-primary w-100 mb-2">Doctor Dashboard</a>
 
-            <a href="{{ route('doctor.get.diagnosis') }}" class="btn btn-outline-success w-100 mb-2">AI Diagnosis</a>
+            <a href="{{ route('doctor.get.diagnosis') }}" class="btn btn-outline-primary w-100 mb-2">AI Diagnosis</a>
 
             @if (auth()->user()->hasRole('patient'))
                 <a href="{{ route('patient.dashboard') }}" class="btn btn-outline-secondary w-100 mb-2">Switch to
