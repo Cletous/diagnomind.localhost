@@ -26,7 +26,7 @@ class DefaultUsersSeeder extends Seeder
             'password' => Hash::make('admin'),
             'email_verified_at' => now()
         ]);
-        $admin->roles()->syncWithoutDetaching([$adminRole->id]);
+        $admin->roles()->syncWithoutDetaching([$adminRole->id, $patientRole->id]);
 
         // Doctors
         $doctor1 = User::updateOrCreate([
@@ -38,7 +38,7 @@ class DefaultUsersSeeder extends Seeder
             'password' => Hash::make('doctor'),
             'email_verified_at' => now()
         ]);
-        $doctor1->roles()->syncWithoutDetaching([$doctorRole->id]);
+        $doctor1->roles()->syncWithoutDetaching([$doctorRole->id, $patientRole->id]);
 
         $doctor2 = User::updateOrCreate([
             'national_id_number' => '111111111T03',
@@ -49,7 +49,7 @@ class DefaultUsersSeeder extends Seeder
             'password' => Hash::make('doctor'),
             'email_verified_at' => now()
         ]);
-        $doctor2->roles()->syncWithoutDetaching([$doctorRole->id]);
+        $doctor2->roles()->syncWithoutDetaching([$doctorRole->id, $patientRole->id]);
 
         // Patients - Create 20 test users
         for ($i = 1; $i <= 20; $i++) {
