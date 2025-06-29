@@ -17,12 +17,13 @@ Route::view('profile', 'profile')
 
 Route::middleware(['auth', 'verified'])->group(function () {
 
-    Route::prefix('patient')->as('patient.')->group(function () {
+    Route::middleware(['user_role:patient'])->prefix('patient')->as('patient.')->group(function () {
         Route::get('/dashboard', PatientDashboardLivewire::class)->name('dashboard');
+
         Route::get('/diagnosis-history', DiagnosisHistoryLivewire::class)->name('diagnosis.history');
     });
 
-    Route::prefix('doctor')->as('doctor.')->group(function () {
+    Route::middleware(['user_role:doctor'])->prefix('doctor')->as('doctor.')->group(function () {
         Route::get('/dashboard', DoctorDashboardLivewire::class)->name('dashboard');
 
         Route::get('/get-ai-diagnosis', GetAiDiagnosisLivewire::class)->name('get.diagnosis');
@@ -33,7 +34,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/hospitals/{hospital}/invite', HospitalLivewire::class)->name('hospitals.invite')->can('invite', [Hospital::class, '{hospital}' => 'hospital']);
     });
 
-    Route::prefix('admin')->as('admin.')->group(function () {
+    Route::middleware(['user_role:admin'])->prefix('admin')->as('admin.')->group(function () {
         Route::get('/dashboard', DoctorDashboardLivewire::class)->name('dashboard');
     });
 });
