@@ -13,7 +13,7 @@ DiagnoMind is a full-stack medical diagnosis system built with **Laravel + Livew
 
 ### 1. Download or Clone the Project
 
-Extract or clone the project folder:
+Extract or clone the project folders into a file structure as follows:
 
 ```
 
@@ -22,6 +22,9 @@ diagnomind-projects/
 └── diagnomind.localhost/ # Laravel web frontend
 
 ```
+
+-   Please note that diagnomind-ai-server repository can be found at https://github.com/Cletous/diagnomind-ai-server
+-   Please note that diagnomind.localhost repository can be found at https://github.com/Cletous/diagnomind.localhost
 
 ---
 
