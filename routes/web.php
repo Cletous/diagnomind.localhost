@@ -10,6 +10,7 @@ use App\Livewire\Guest\HomeLivewire;
 use App\Livewire\Patient\DiagnosisHistoryLivewire;
 use App\Livewire\Patient\PatientDashboardLivewire;
 use App\Models\Hospital;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 Route::fallback(function () {
@@ -31,7 +32,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/diagnosis-history', DiagnosisHistoryLivewire::class)->name('diagnosis.history');
 
         // For doctors/admins viewing others’ histories
-        Route::get('/diagnosis-history/user/{user}', DiagnosisHistoryLivewire::class)->name('diagnosis.history.with.user');
+        Route::get('/diagnosis-history/user/{user}', DiagnosisHistoryLivewire::class)->name('diagnosis.history.with.user')->can('viewDiagnosisHistory', [User::class, '{user}' => 'user']);
     });
 
     Route::middleware(['user_role:doctor'])->prefix('doctor')->as('doctor.')->group(function () {

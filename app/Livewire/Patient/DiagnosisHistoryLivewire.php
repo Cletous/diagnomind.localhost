@@ -20,11 +20,12 @@ class DiagnosisHistoryLivewire extends Component
 
     public function mount(User $user)
     {
-        $this->user = $user ?? Auth::user();
-
-        if ($this->user->id !== Auth::id() && !Auth::user()->hasRole('doctor') && !Auth::user()->hasRole('admin')) {
-            abort(403, 'Unauthorized to view this patient’s history.');
+        if (request()->routeIs('patient.diagnosis.history.with.user')) {
+            $this->user = $user;
+        } else {
+            $this->user = Auth::user();
         }
+        // dd($this->user);
 
         $this->hospitals = Hospital::orderBy('name')->get();
         $this->fetchDiagnoses();

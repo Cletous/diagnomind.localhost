@@ -30,7 +30,7 @@ class PatientsMedicalRecordsLivewire extends Component
         // Get patients diagnosed by the doctor within those hospitals
         $patients = User::whereHas('diagnosisRequests', function (Builder $query) use ($doctor, $hospitalIds) {
             $query->where('doctor_id', $doctor->id)
-                ->whereIn('hospital_id', $hospitalIds);
+                ->orWhereIn('hospital_id', $hospitalIds);
         })
             ->where(function ($q) {
                 $q->where('first_name', 'like', '%' . $this->search . '%')

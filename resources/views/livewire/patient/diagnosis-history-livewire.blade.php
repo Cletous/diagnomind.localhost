@@ -1,5 +1,17 @@
 <div class="container mt-4">
-    <h3 class="mb-3">Your Diagnosis History</h3>
+    @if ($user->id === auth()->id())
+        <h3 class="mb-3">Your Diagnosis History</h3>
+    @else
+        <div class="mb-3">
+            <h3 class="mb-1">
+                Diagnosis History for {{ $user->first_name }} {{ $user->last_name }}
+            </h3>
+            <p class="mb-0 text-muted">
+                <strong>Email:</strong> {{ $user->email }} <br>
+                <strong>National ID:</strong> {{ $user->national_id_number }}
+            </p>
+        </div>
+    @endif
 
     {{-- Filters --}}
     <div class="row mb-4">
