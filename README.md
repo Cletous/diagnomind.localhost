@@ -98,6 +98,8 @@ MAIL_FROM_NAME="${APP_NAME}"
 
 Replace `MAIL_HOST, MAIL_PORT, MAIL_USERNAME, MAIL_PASSWORD, MAIL_ENCRYPTION` and `MAIL_FROM_ADDRESS` with your actual mail provider configuration settings and credentials.
 
+---
+
 ### 8. Start Laravel Development Server
 
 ```bash
