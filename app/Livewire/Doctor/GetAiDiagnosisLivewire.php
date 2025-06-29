@@ -4,7 +4,9 @@ namespace App\Livewire\Doctor;
 
 use App\Models\User;
 use App\Models\DiagnosisRequest;
+use App\Models\Hospital;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Validation\ValidationException;
 use Livewire\Component;
 
 class GetAiDiagnosisLivewire extends Component
@@ -15,14 +17,22 @@ class GetAiDiagnosisLivewire extends Component
     public $ai_response;
     public $submitted = false;
 
+    public $hospitals = [];
+    public $selected_hospital_id;
+
+    public function mount()
+    {
+        // Load hospitals linked to the logged-in doctor
+        $this->hospitals = auth()->user()->hospitals()->get();
+    }
+
     public function findPatient()
     {
         $this->validate([
             'national_id_number' => 'required|string',
         ]);
 
-        $this->patient = User::where('national_id_number', $this->national_id_number)
-            ->first();
+        $this->patient = User::where('national_id_number', $this->national_id_number)->first();
 
         if (!$this->patient) {
             $this->addError('national_id_number', 'No patient found with this ID.');
@@ -33,6 +43,7 @@ class GetAiDiagnosisLivewire extends Component
     {
         $this->validate([
             'prompt' => 'required|string',
+            'selected_hospital_id' => 'required|exists:hospitals,id',
         ]);
 
         if (!$this->patient) {
@@ -40,31 +51,33 @@ class GetAiDiagnosisLivewire extends Component
             return;
         }
 
-        // Fetch doctor’s primary hospital (you may enhance this with a dropdown later)
-        $hospital = auth()->user()->hospitals()->first();
-
+        $hospital = Hospital::find($this->selected_hospital_id);
         if (!$hospital) {
-            $this->addError('prompt', 'You are not assigned to any hospital. Please contact admin.');
+            $this->addError('selected_hospital_id', 'Invalid hospital selection.');
             return;
         }
 
         // Call AI API
-        $response = Http::post('http://127.0.0.1:8000/predict', [
-            'inputs' => $this->prompt,
-        ]);
+        try {
+            $response = Http::post('http://127.0.0.1:8000/predict', [
+                'inputs' => $this->prompt,
+            ]);
 
-        $this->ai_response = $response->json('prediction') ?? 'No diagnosis returned.';
+            $this->ai_response = $response->json('prediction') ?? 'No diagnosis returned.';
 
-        // Save to DB
-        DiagnosisRequest::create([
-            'doctor_id' => auth()->id(),
-            'patient_id' => $this->patient->id,
-            'prompt' => $this->prompt,
-            'ai_response' => $this->ai_response,
-            'hospital_id' => $hospital->id, // ✅ Link diagnosis to hospital
-        ]);
+            DiagnosisRequest::create([
+                'doctor_id' => auth()->id(),
+                'patient_id' => $this->patient->id,
+                'prompt' => $this->prompt,
+                'ai_response' => $this->ai_response,
+                'hospital_id' => $hospital->id,
+            ]);
 
-        $this->submitted = true;
+            $this->submitted = true;
+        } catch (\Exception $e) {
+            throw ValidationException::withMessages(['prompt' => $e->getMessage()]);
+        }
+
     }
 
     public function render()

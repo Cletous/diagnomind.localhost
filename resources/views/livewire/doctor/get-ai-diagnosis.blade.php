@@ -23,6 +23,19 @@
 
         <form wire:submit.prevent="submit">
             <div class="mb-3">
+                <label>Select Hospital</label>
+                <select wire:model="selected_hospital_id" class="form-select">
+                    <option value="">-- Choose Hospital --</option>
+                    @foreach ($hospitals as $hospital)
+                        <option value="{{ $hospital->id }}">{{ $hospital->name }}</option>
+                    @endforeach
+                </select>
+                @error('selected_hospital_id')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <div class="mb-3">
                 <label>Symptoms / Prompt</label>
                 <textarea wire:model="prompt" class="form-control" rows="5"></textarea>
                 @error('prompt')
@@ -40,4 +53,5 @@
             </div>
         @endif
     @endif
+
 </div>
