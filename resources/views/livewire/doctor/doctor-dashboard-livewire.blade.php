@@ -41,6 +41,9 @@
                 <div class="card-footer bg-transparent border-0">
                     <a href="{{ route('doctor.get.diagnosis') }}" class="btn btn-success btn-sm">Submit New
                         Diagnosis</a>
+                    <a href="{{ route('doctor.patients.records') }}" class="btn btn-outline-primary btn-sm">
+                        My Patients
+                    </a>
                 </div>
             </div>
         </div>
