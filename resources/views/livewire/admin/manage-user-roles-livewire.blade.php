@@ -30,7 +30,7 @@
             <tbody>
                 @forelse ($users as $index => $user)
                     <tr>
-                        <td>{{ $index + 1 }}</td>
+                        <td>{{ ($users->firstItem() ?? 0) + $index }}</td>
                         <td>{{ $user->first_name }} {{ $user->last_name }}</td>
                         <td>{{ $user->email }}</td>
                         <td>{{ $user->national_id_number }}</td>
@@ -42,26 +42,18 @@
                         <td>
                             @if ($user->hasRole('doctor'))
                                 <button wire:click="confirmRoleRemoval({{ $user->id }}, 'doctor')"
-                                    class="btn btn-sm btn-outline-danger me-2">
-                                    Revoke Doctor
-                                </button>
+                                    class="btn btn-sm btn-outline-danger me-2">Revoke Doctor</button>
                             @else
                                 <button wire:click="assignRole({{ $user->id }}, 'doctor')"
-                                    class="btn btn-sm btn-outline-success me-2">
-                                    Make Doctor
-                                </button>
+                                    class="btn btn-sm btn-outline-success me-2">Make Doctor</button>
                             @endif
 
                             @if ($user->hasRole('admin'))
                                 <button wire:click="confirmRoleRemoval({{ $user->id }}, 'admin')"
-                                    class="btn btn-sm btn-outline-danger">
-                                    Revoke Admin
-                                </button>
+                                    class="btn btn-sm btn-outline-danger">Revoke Admin</button>
                             @else
                                 <button wire:click="assignRole({{ $user->id }}, 'admin')"
-                                    class="btn btn-sm btn-outline-primary">
-                                    Make Admin
-                                </button>
+                                    class="btn btn-sm btn-outline-primary">Make Admin</button>
                             @endif
                         </td>
                     </tr>
@@ -70,8 +62,14 @@
                         <td colspan="6" class="text-center text-muted">No users found.</td>
                     </tr>
                 @endforelse
+
             </tbody>
         </table>
+
+        <div class="mt-3">
+            {{ $users->links('pagination::bootstrap-5') }}
+        </div>
+
     </div>
 
     <!-- Confirmation Modal -->

@@ -68,6 +68,6 @@ class ManageUserRolesLivewire extends Component
             ->paginate(10);
 
         return view('livewire.admin.manage-user-roles-livewire', compact('users'))
-            ->layout('components.layouts.patient.app', ['title' => ucfirst($this->title)]);
+            ->layout('components.layouts.admin.app', ['title' => ucfirst($this->title)]);
     }
 }
