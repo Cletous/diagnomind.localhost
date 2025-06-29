@@ -38,6 +38,8 @@ class DefaultUsersSeeder extends Seeder
             'password' => Hash::make('doctor'),
             'email_verified_at' => now()
         ]);
+        $doctor1->roles()->syncWithoutDetaching([$doctorRole->id]);
+
         $doctor2 = User::updateOrCreate([
             'national_id_number' => '111111111T03',
         ], [
