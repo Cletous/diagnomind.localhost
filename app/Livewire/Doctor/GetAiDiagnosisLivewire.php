@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Doctor;
 
+use App\Models\AiFeedback;
 use App\Models\User;
 use App\Models\DiagnosisRequest;
 use App\Models\Hospital;
@@ -15,6 +16,7 @@ class GetAiDiagnosisLivewire extends Component
     public $patient;
     public $prompt;
     public $ai_response;
+    public $comment;
     public $submitted = false;
 
     public $hospitals = [];
@@ -53,34 +55,48 @@ class GetAiDiagnosisLivewire extends Component
             return;
         }
 
-        $hospital = Hospital::find($this->selected_hospital_id);
-        if (!$hospital) {
-            $this->addError('selected_hospital_id', 'Invalid hospital selection.');
-            return;
-        }
-
-        // Call AI API
         try {
             $response = Http::post('http://127.0.0.1:2500/predict', [
                 'inputs' => $this->prompt,
             ]);
 
             $this->ai_response = $response->json('prediction') ?? 'No diagnosis returned.';
-
-            DiagnosisRequest::create([
-                'doctor_id' => auth()->id(),
-                'patient_id' => $this->patient->id,
-                'prompt' => $this->prompt,
-                'ai_response' => $this->ai_response,
-                'hospital_id' => $hospital->id,
-            ]);
-
-            $this->submitted = true;
         } catch (\Exception $e) {
             throw ValidationException::withMessages(['prompt' => $e->getMessage()]);
         }
-
     }
+
+    public function submitDiagnosisAndComment()
+    {
+        $this->validate([
+            'comment' => 'nullable|string',
+        ]);
+
+        if (!$this->ai_response || !$this->patient || !$this->prompt || !$this->selected_hospital_id) {
+            $this->addError('prompt', 'Please complete the AI step first.');
+            return;
+        }
+
+        $diagnosis = DiagnosisRequest::create([
+            'doctor_id' => auth()->id(),
+            'patient_id' => $this->patient->id,
+            'prompt' => $this->prompt,
+            'ai_response' => $this->ai_response,
+            'hospital_id' => $this->selected_hospital_id,
+        ]);
+
+        if (!empty(trim($this->comment))) {
+            AiFeedback::create([
+                'diagnosis_request_id' => $diagnosis->id,
+                'doctor_id' => auth()->id(),
+                'comment' => $this->comment,
+            ]);
+        }
+
+        $this->submitted = true;
+        $this->reset(['prompt', 'ai_response', 'comment', 'selected_hospital_id']);
+    }
+
 
     public function render()
     {

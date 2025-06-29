@@ -51,7 +51,21 @@
                 <h5>AI Response</h5>
                 <p>{{ $ai_response }}</p>
             </div>
+
+            <form wire:submit.prevent="submitDiagnosisAndComment" class="mt-3">
+                <div class="mb-3">
+                    <label>Doctor's Comment (Optional)</label>
+                    <textarea wire:model="comment" class="form-control" rows="3"
+                        placeholder="Add your opinion based on patient's condition..."></textarea>
+                    @error('comment')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <button class="btn btn-primary">Finalize Diagnosis</button>
+            </form>
         @endif
+
     @endif
 
 </div>

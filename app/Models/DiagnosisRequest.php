@@ -23,6 +23,11 @@ class DiagnosisRequest extends Model
         return $this->belongsTo(User::class, 'doctor_id');
     }
 
+    public function feedback()
+    {
+        return $this->hasOne(AiFeedback::class);
+    }
+
     public function patient()
     {
         return $this->belongsTo(User::class, 'patient_id');

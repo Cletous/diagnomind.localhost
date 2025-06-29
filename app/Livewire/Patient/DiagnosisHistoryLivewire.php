@@ -43,7 +43,7 @@ class DiagnosisHistoryLivewire extends Component
 
     public function fetchDiagnoses()
     {
-        $query = DiagnosisRequest::with(['doctor', 'hospital'])
+        $query = DiagnosisRequest::with(['doctor', 'feedback', 'hospital'])
             ->where('patient_id', $this->user->id);
 
         if ($this->hospitalFilter) {

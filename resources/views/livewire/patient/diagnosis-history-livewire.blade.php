@@ -42,6 +42,15 @@
                     <strong>Hospital:</strong>
                     <a href="#">{{ $diagnosis->hospital->name ?? 'N/A' }}</a><br>
                     <strong>Diagnosis:</strong> {{ $diagnosis->ai_response }}<br>
+                    {{-- Doctor’s comment --}}
+                    @if ($diagnosis->feedback)
+                        <div class="mt-3">
+                            <strong>Doctor’s Comment(s):</strong>
+                            <p class="mb-1">{{ $diagnosis->feedback->comment }}</p>
+                            <small class="text-muted">Submitted on
+                                {{ $diagnosis->feedback->created_at->format('D, d M Y @ h:i a') }}</small>
+                        </div>
+                    @endif
                     <strong>Rating:</strong>
                     @if ($user->id === auth()->id())
                         @if ($diagnosis->rating === 'like')
@@ -82,14 +91,6 @@
                     wire:click="$emit('openFeedbackModal', {{ $diagnosis->id }})">
                     Rate / Feedback
                 </button>
-
-                {{-- Optional feedback display --}}
-                @if ($diagnosis->feedback)
-                    <div class="mt-2">
-                        <strong>Your Feedback:</strong>
-                        <p>{{ $diagnosis->feedback->comment }}</p>
-                    </div>
-                @endif
             </div>
         </div>
     @empty
