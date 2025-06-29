@@ -14,7 +14,7 @@ class AuthorizeMiddleware
         }
 
         if (Auth::check() && $role === 'patient') {
-            return $next($request);
+            return $next($request); // default for every authenticated user so allow for every authenticated user
         }
 
         if (!Auth::user()->hasRole($role)) {
