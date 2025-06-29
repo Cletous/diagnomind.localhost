@@ -27,6 +27,10 @@
             <a href="{{ route('patient.diagnosis.history') }}" class="btn btn-outline-primary w-100 mb-2">Diagnosis
                 History</a>
 
+            <a href="{{ route('patient.self.diagnosis') }}" class="btn btn-outline-primary w-100 mb-2">
+                AI Self-Diagnosis
+            </a>
+
             @if (auth()->user()->hasRole('doctor'))
                 <a href="{{ route('doctor.dashboard') }}" class="btn btn-outline-secondary w-100 mb-2">Switch to Doctor</a>
             @endif

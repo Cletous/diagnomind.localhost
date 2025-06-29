@@ -38,7 +38,7 @@
                 <h5 class="card-title">{{ $diagnosis->prompt }}</h5>
                 <p class="card-text">
                     <strong>Doctor:</strong>
-                    <a href="#">{{ $diagnosis->doctor->first_name }} {{ $diagnosis->doctor->last_name }}</a><br>
+                    <a href="#">{{ $diagnosis->doctor?->name ?? 'Self AI-Diagnosis' }}</a><br>
                     <strong>Hospital:</strong>
                     <a href="#">{{ $diagnosis->hospital->name ?? 'N/A' }}</a><br>
                     <strong>Diagnosis:</strong> {{ $diagnosis->ai_response }}<br>

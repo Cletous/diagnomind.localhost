@@ -8,6 +8,7 @@ use App\Livewire\Doctor\HospitalLivewire;
 use App\Livewire\Doctor\PatientsMedicalRecordsLivewire;
 use App\Livewire\Guest\HomeLivewire;
 use App\Livewire\Patient\DiagnosisHistoryLivewire;
+use App\Livewire\Patient\GetAiSelfDiagnosisLivewire;
 use App\Livewire\Patient\PatientDashboardLivewire;
 use App\Models\Hospital;
 use App\Models\User;
@@ -27,6 +28,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::middleware(['user_role:patient'])->prefix('patient')->as('patient.')->group(function () {
         Route::get('/dashboard', PatientDashboardLivewire::class)->name('dashboard');
+
+        Route::get('/self-diagnosis', GetAiSelfDiagnosisLivewire::class)->name('self.diagnosis');
 
         // For patients viewing their own history (default)
         Route::get('/diagnosis-history', DiagnosisHistoryLivewire::class)->name('diagnosis.history');
