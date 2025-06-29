@@ -3,37 +3,24 @@
 namespace App\Livewire\Admin;
 
 use App\Models\User;
-use App\Models\Role;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class ManageUserRolesLivewire extends Component
 {
-    public $users;
+    use WithPagination;
+
     public $title = 'User Roles';
 
     public $filterRole = 'all';
-
     public $confirmingRemoval = false;
     public $removalUserId;
     public $removalRole;
 
-    public function mount()
-    {
-        $this->loadUsers();
-    }
-
+    // Reset pagination when filter changes
     public function updatedFilterRole()
     {
-        $this->loadUsers();
-    }
-
-    public function loadUsers()
-    {
-        $this->users = User::with('roles')
-            ->when($this->filterRole !== 'all', function ($query) {
-                $query->whereHas('roles', fn($q) => $q->where('name', $this->filterRole));
-            })
-            ->get();
+        $this->resetPage();
     }
 
     public function assignRole($userId, $role)
@@ -43,7 +30,7 @@ class ManageUserRolesLivewire extends Component
             $user->assignRole($role);
             session()->flash('success', "Assigned '{$role}' to {$user->first_name}");
         }
-        $this->loadUsers();
+        $this->resetPage();
     }
 
     public function confirmRoleRemoval($userId, $role)
@@ -69,12 +56,18 @@ class ManageUserRolesLivewire extends Component
         }
 
         $this->cancelRemoval();
-        $this->loadUsers();
+        $this->resetPage();
     }
 
     public function render()
     {
-        return view('livewire.admin.manage-user-roles-livewire')
+        $users = User::with('roles')
+            ->when($this->filterRole !== 'all', fn($q) =>
+                $q->whereHas('roles', fn($r) => $r->where('name', $this->filterRole)))
+            ->orderBy('first_name')
+            ->paginate(10);
+
+        return view('livewire.admin.manage-user-roles-livewire', compact('users'))
             ->layout('components.layouts.patient.app', ['title' => ucfirst($this->title)]);
     }
 }
