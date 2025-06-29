@@ -21,10 +21,10 @@ class DiagnosisFeedbackLivewire extends Component
     public $hospital_review;
 
     protected $rules = [
-        'doctor_rating' => 'nullable|integer|min:1|max:5',
-        'doctor_review' => 'nullable|string|max:1000',
-        'hospital_rating' => 'nullable|integer|min:1|max:5',
-        'hospital_review' => 'nullable|string|max:1000',
+        'doctor_rating' => 'required|integer|min:1|max:5',
+        'doctor_review' => 'required|string|max:1000',
+        'hospital_rating' => 'required|integer|min:1|max:5',
+        'hospital_review' => 'required|string|max:1000',
     ];
 
 
@@ -42,7 +42,7 @@ class DiagnosisFeedbackLivewire extends Component
         $diagnosis = DiagnosisRequest::with(['doctor', 'hospital'])->findOrFail($this->diagnosisId);
 
         // Doctor Review
-        if ($diagnosis->doctor && $this->doctor_rating && $this->doctor_review) {
+        if ($diagnosis->doctor && $this->doctor_rating) {
             DoctorReview::updateOrCreate(
                 [
                     'doctor_id' => $diagnosis->doctor->id,
@@ -56,7 +56,7 @@ class DiagnosisFeedbackLivewire extends Component
         }
 
         // Hospital Review
-        if ($diagnosis->hospital && $this->hospital_rating && $this->hospital_review) {
+        if ($diagnosis->hospital && $this->hospital_rating) {
             HospitalReview::updateOrCreate(
                 [
                     'hospital_id' => $diagnosis->hospital->id,
