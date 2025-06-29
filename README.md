@@ -1,5 +1,3 @@
----
-
 ```markdown
 # DiagnoMind – AI-Powered Medical Diagnosis System
 
@@ -17,14 +15,13 @@ DiagnoMind is a full-stack medical diagnosis system built with **Laravel + Livew
 ### 1. Download or Clone the Project
 
 Extract or clone the project folder:
-
 ```
 
 diagnomind-projects/
-├── diagnomind-ai-server/     # Python Flask AI engine
-└── diagnomind.localhost/     # Laravel web frontend
+├── diagnomind-ai-server/ # Python Flask AI engine
+└── diagnomind.localhost/ # Laravel web frontend
 
-```
+````
 
 ---
 
@@ -33,7 +30,7 @@ diagnomind-projects/
 ```bash
 cd diagnomind-projects/diagnomind-ai-server
 python app.py
-```
+````
 
 This runs the Flask server at: `http://127.0.0.1:8000/predict`
 
