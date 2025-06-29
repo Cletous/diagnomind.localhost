@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Models\DiagnosisRequest;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 
@@ -15,5 +16,4 @@ class UserPolicy
             : Response::deny('Unauthorized to view this patient\'s history.');
         ;
     }
-
 }

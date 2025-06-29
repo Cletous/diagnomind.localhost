@@ -57,6 +57,32 @@ class DiagnosisHistoryLivewire extends Component
         $this->diagnoses = $query->latest()->get();
     }
 
+    public function likeDiagnosis($diagnosisId)
+    {
+        $diagnosis = DiagnosisRequest::where('id', $diagnosisId)
+            ->firstOrFail();
+
+        if (!Auth::user()->can('rateDiagnosis', $diagnosis)) {
+            abort(403);
+        }
+
+        $diagnosis->update(['rating' => 'like']);
+        $this->fetchDiagnoses();
+    }
+
+    public function dislikeDiagnosis($diagnosisId)
+    {
+        $diagnosis = DiagnosisRequest::where('id', $diagnosisId)
+            ->firstOrFail();
+
+        if (!Auth::user()->can('rateDiagnosis', $diagnosis)) {
+            abort(403);
+        }
+
+        $diagnosis->update(['rating' => 'dislike']);
+        $this->fetchDiagnoses();
+    }
+
     public function render()
     {
         return view('livewire.patient.diagnosis-history-livewire')

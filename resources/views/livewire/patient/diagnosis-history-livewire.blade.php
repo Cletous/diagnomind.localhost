@@ -43,13 +43,35 @@
                     <a href="#">{{ $diagnosis->hospital->name ?? 'N/A' }}</a><br>
                     <strong>Diagnosis:</strong> {{ $diagnosis->ai_response }}<br>
                     <strong>Rating:</strong>
-                    @if ($diagnosis->rating === 'like')
-                        👍 Liked
-                    @elseif($diagnosis->rating === 'dislike')
-                        👎 Disliked
+                    @if ($user->id === auth()->id())
+                        @if ($diagnosis->rating === 'like')
+                            👍 Liked
+                        @elseif($diagnosis->rating === 'dislike')
+                            👎 Disliked
+                        @else
+                            Not Rated
+                        @endif
+
+                        <div class="mt-2">
+                            <button wire:click="likeDiagnosis({{ $diagnosis->id }})"
+                                class="btn btn-sm btn-outline-success me-1">
+                                👍 Like
+                            </button>
+                            <button wire:click="dislikeDiagnosis({{ $diagnosis->id }})"
+                                class="btn btn-sm btn-outline-danger">
+                                👎 Dislike
+                            </button>
+                        </div>
                     @else
-                        Not Rated
+                        @if ($diagnosis->rating === 'like')
+                            👍 Liked
+                        @elseif($diagnosis->rating === 'dislike')
+                            👎 Disliked
+                        @else
+                            Not Rated
+                        @endif
                     @endif
+
                     <br>
                     <small class="text-muted">Diagnosed on:
                         {{ $diagnosis->created_at->format('D, d M Y @ h:i a') }}</small>
