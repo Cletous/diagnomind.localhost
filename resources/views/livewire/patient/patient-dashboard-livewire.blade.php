@@ -40,6 +40,9 @@
 
     <div class="mt-5">
         <h4 class="mb-3">Recent Diagnoses</h4>
+        <a href="{{ route('patient.self.diagnosis') }}" class="btn btn-outline-primary mb-2">
+            Diagnose With AI
+        </a>
         <div class="table-responsive">
             <table class="table table-hover align-middle">
                 <thead class="table-light">

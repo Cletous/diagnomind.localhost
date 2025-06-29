@@ -32,6 +32,17 @@ class GetAiSelfDiagnosisLivewire extends Component
             'selected_hospital_id' => 'nullable|exists:hospitals,id',
         ]);
 
+        // Check if patient has already submitted today
+        $alreadySubmitted = DiagnosisRequest::where('patient_id', auth()->id())
+            ->whereNull('doctor_id') // only self-diagnoses
+            ->whereDate('created_at', now()->toDateString())
+            ->exists();
+
+        if ($alreadySubmitted) {
+            $this->addError('prompt', 'You can only get a maximum of one AI diagnosis per day. Please try again tomorrow or go see a doctor');
+            return;
+        }
+
         try {
             $response = Http::post('http://127.0.0.1:2500/predict', [
                 'inputs' => $this->prompt,

@@ -41,7 +41,7 @@
                     <a href="#">{{ $diagnosis->doctor?->name ?? 'Self AI-Diagnosis' }}</a><br>
                     <strong>Hospital:</strong>
                     <a href="#">{{ $diagnosis->hospital->name ?? 'N/A' }}</a><br>
-                    <strong>Diagnosis:</strong> {{ $diagnosis->ai_response }}<br>
+                    <strong>AI Diagnosis:</strong> {{ $diagnosis->ai_response }}<br>
                     {{-- Doctor’s comment --}}
                     @if ($diagnosis->feedback)
                         <div class="mt-3">
