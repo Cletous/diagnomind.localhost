@@ -1,7 +1,7 @@
 <div class="container py-4">
     <div class="row mb-4">
         <div class="col">
-            <h2 class="fw-bold">Admin Dashboard 🛠️</h2>
+            <h2 class="fw-bold">Admin Dashboard</h2>
             <p class="text-muted">System overview and user role management</p>
         </div>
     </div>

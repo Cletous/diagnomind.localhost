@@ -1,6 +1,7 @@
 <?php
 
 use App\Livewire\Admin\AdminDashboardLivewire;
+use App\Livewire\Admin\ManageUserRolesLivewire;
 use App\Livewire\Doctor\DoctorDashboardLivewire;
 use App\Livewire\Doctor\GetAiDiagnosisLivewire;
 use App\Livewire\Doctor\HospitalLivewire;
@@ -41,6 +42,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::middleware(['user_role:admin'])->prefix('admin')->as('admin.')->group(function () {
         Route::get('/dashboard', AdminDashboardLivewire::class)->name('dashboard');
+        Route::get('/manage-user-roles', ManageUserRolesLivewire::class)->name('roles.manage');
     });
 });
 

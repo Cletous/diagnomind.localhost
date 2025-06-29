@@ -12,6 +12,7 @@ class PatientDashboardLivewire extends Component
     public $feedbackCount;
     public $mostVisitedHospital;
     public $recentDiagnoses = [];
+    public $title = 'Patient Dashboard';
 
     public function mount()
     {
@@ -40,6 +41,6 @@ class PatientDashboardLivewire extends Component
 
     public function render()
     {
-        return view('livewire.patient.patient-dashboard-livewire');
+        return view('livewire.patient.patient-dashboard-livewire')->layout('components.layouts.patient.app', ['title' => ucfirst($this->title)]);
     }
 }

@@ -13,6 +13,7 @@ class AdminDashboardLivewire extends Component
     public $patientCount;
     public $hospitalCount;
     public $users;
+    public $title = 'Admin Dash';
 
     public function mount()
     {
@@ -27,6 +28,6 @@ class AdminDashboardLivewire extends Component
 
     public function render()
     {
-        return view('livewire.admin.admin-dashboard-livewire');
+        return view('livewire.admin.admin-dashboard-livewire')->layout('components.layouts.admin.app', ['title' => ucfirst($this->title)]);
     }
 }
