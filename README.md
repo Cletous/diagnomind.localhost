@@ -43,7 +43,7 @@ cd ../diagnomind.localhost
 cp .env.example .env
 ```
 
-Edit `.env` and configure your database:
+Edit `.env` and configure your database for example:
 
 ```dotenv
 DB_CONNECTION=mysql
@@ -83,7 +83,22 @@ php artisan migrate:fresh --seed
 
 ---
 
-### 7. Start Laravel Development Server
+### 7. Link and configure your mail provider:
+
+```dotenv
+MAIL_MAILER=smtp
+MAIL_HOST=server1.makuruwan.com
+MAIL_PORT=465
+MAIL_USERNAME=no-reply@yourdomain.com
+MAIL_PASSWORD=EmailPassword
+MAIL_ENCRYPTION=ssl
+MAIL_FROM_ADDRESS="no-reply@yourdomain.com"
+MAIL_FROM_NAME="${APP_NAME}"
+```
+
+Replace `.MAIL_HOST, MAIL_PORT, MAIL_USERNAME, MAIL_PASSWORD, MAIL_ENCRYPTION` and `MAIL_FROM_ADDRESS` with your actual mail provider configuration settings and credentials.
+
+### 8. Start Laravel Development Server
 
 ```bash
 php artisan serve
