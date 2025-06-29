@@ -1,5 +1,4 @@
-```markdown
-# DiagnoMind – AI-Powered Medical Diagnosis System
+# 🧠 DiagnoMind – AI-Powered Medical Diagnosis System
 
 [![Laravel](https://img.shields.io/badge/Laravel-12.x-red?logo=laravel)](https://laravel.com/)
 [![Python](https://img.shields.io/badge/Flask-Python-blue?logo=python)](https://flask.palletsprojects.com/)
@@ -10,40 +9,41 @@ DiagnoMind is a full-stack medical diagnosis system built with **Laravel + Livew
 
 ---
 
-## Getting Started (Development Setup)
+## 🚀 Getting Started (Development Setup)
 
-### 1. Download or Clone the Project
+### 1. 📦 Download or Clone the Project
 
 Extract or clone the project folder:
+
 ```
 
 diagnomind-projects/
 ├── diagnomind-ai-server/ # Python Flask AI engine
 └── diagnomind.localhost/ # Laravel web frontend
 
-````
+```
 
 ---
 
-### 2. Start the AI Diagnosis Server
+### 2. ⚙️ Start the AI Diagnosis Server
 
 ```bash
 cd diagnomind-projects/diagnomind-ai-server
 python app.py
-````
+```
 
 This runs the Flask server at: `http://127.0.0.1:8000/predict`
 
 ---
 
-### 3. Configure Laravel Environment
+### 3. 🔧 Configure Laravel Environment
 
 ```bash
 cd ../diagnomind.localhost
 cp .env.example .env
 ```
 
-Update `.env` file to match your database credentials:
+Edit `.env` and configure your database:
 
 ```dotenv
 DB_CONNECTION=mysql
@@ -56,9 +56,7 @@ DB_PASSWORD=
 
 ---
 
-### 4. Install PHP Dependencies
-
-Ensure you have Composer installed, then run:
+### 4. 🧰 Install PHP Dependencies
 
 ```bash
 composer install
@@ -66,9 +64,7 @@ composer install
 
 ---
 
-### 5. Run Migrations and Seeders
-
-This will reset and seed your database:
+### 5. 🗃️ Run Migrations and Seeders
 
 ```bash
 php artisan migrate:fresh --seed
@@ -76,7 +72,7 @@ php artisan migrate:fresh --seed
 
 ---
 
-### 6. Default User Accounts
+### 6. 👥 Default User Accounts
 
 | Role         | Email                                | Password  |
 | ------------ | ------------------------------------ | --------- |
@@ -87,27 +83,27 @@ php artisan migrate:fresh --seed
 
 ---
 
-### 7. Start Laravel Development Server
+### 7. ▶️ Start Laravel Development Server
 
 ```bash
 php artisan serve
 ```
 
-Visit: [http://127.0.0.1:8000](http://127.0.0.1:8000)
+Visit [http://127.0.0.1:8000](http://127.0.0.1:8000)
 
 ---
 
-## Key Features
+## 🔑 Key Features
 
--   Role-based Access (Admin, Doctor, Patient)
--   AI Symptom-to-Diagnosis engine (via Flask)
--   Hospital Management & Invitations
--   Diagnosis History & Filtering
--   Feedback & Ratings for Diagnoses
+-   🔐 Role-based Access (Admin, Doctor, Patient)
+-   🧠 AI Symptom-to-Diagnosis engine (via Flask)
+-   🏥 Hospital Management & Invitations
+-   📅 Diagnosis History & Filtering
+-   ⭐ Feedback & Ratings for Diagnoses
 
 ---
 
-## Tech Stack
+## 🛠 Tech Stack
 
 -   **Backend:** Laravel 12, Livewire, MySQL
 -   **AI Engine:** Flask + Python
@@ -116,30 +112,28 @@ Visit: [http://127.0.0.1:8000](http://127.0.0.1:8000)
 
 ---
 
-## Contributing
+## 🤝 Contributing
 
-Contributions are welcome. Fork the repo and submit a PR!
+Contributions are welcome! Fork the repo and submit a PR.
 
 ---
 
-## License
+## 📄 License
 
 This project is licensed under the [MIT License](LICENSE).
 
 ---
 
-## Contact
+## 📬 Contact
 
-Maintained by **UZ Computer Engineering Students** Part 2 **Group Project with the following members:**
-Cletous Ngoma R196481X - [ngomacletousjnr@gmail.com](mailto:ngomacletousjnr@gmail.com)
-TAKUDZWANASHE H NGAISO R231702X
-TALENT NECHITUKIRE R1810926
-SHELTON MUTAMBIRWA R231684F
-PATRICIA MUKUNZA R231733N
-TADIWA NCUBE R231692S
+Maintained by **UZ Computer Engineering Students** — Part 2 Group Project
+**Group Members:**
+
+-   🧑‍💻 Cletous Ngoma (R196481X) – [ngomacletousjnr@gmail.com](mailto:ngomacletousjnr@gmail.com)
+-   👨‍💻 Takudzwanashe H. Nhaiso (R231702X)
+-   👨‍💻 Talent Nechitukire (R1810926)
+-   👨‍💻 Shelton Mutambirwa (R231684F)
+-   👩‍💻 Patricia Mukunza (R231733N)
+-   👨‍💻 Tadiwa Ncube (R231692S)
 
 ---
-
-```
-
-```
