@@ -4,6 +4,7 @@ namespace App\Livewire\Patient;
 
 use App\Models\DiagnosisRequest;
 use App\Models\Hospital;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
@@ -15,9 +16,16 @@ class DiagnosisHistoryLivewire extends Component
     public $hospitals;
     public $title = 'Diagnosis History';
 
+    public User|null $user;
 
-    public function mount()
+    public function mount(User $user)
     {
+        $this->user = $user ?? Auth::user();
+
+        if ($this->user->id !== Auth::id() && !Auth::user()->hasRole('doctor') && !Auth::user()->hasRole('admin')) {
+            abort(403, 'Unauthorized to view this patient’s history.');
+        }
+
         $this->hospitals = Hospital::orderBy('name')->get();
         $this->fetchDiagnoses();
     }
@@ -35,7 +43,7 @@ class DiagnosisHistoryLivewire extends Component
     public function fetchDiagnoses()
     {
         $query = DiagnosisRequest::with(['doctor', 'hospital'])
-            ->where('patient_id', Auth::id());
+            ->where('patient_id', $this->user->id);
 
         if ($this->hospitalFilter) {
             $query->where('hospital_id', $this->hospitalFilter);
@@ -50,6 +58,9 @@ class DiagnosisHistoryLivewire extends Component
 
     public function render()
     {
-        return view('livewire.patient.diagnosis-history-livewire')->layout('components.layouts.patient.app', ['title' => ucfirst($this->title)]);
+        return view('livewire.patient.diagnosis-history-livewire')
+            ->layout('components.layouts.patient.app', [
+                'title' => ucfirst($this->title),
+            ]);
     }
 }

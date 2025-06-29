@@ -23,7 +23,7 @@
                         <td>{{ $patient->national_id_number }}</td>
                         <td>{{ $patient->email }}</td>
                         <td>
-                            <a href="{{ route('patient.diagnosis.history', ['user' => $patient->id]) }}"
+                            <a href="{{ route('patient.diagnosis.history.with.user', $patient->id) }}"
                                 class="btn btn-sm btn-outline-primary">
                                 View Medical Records
                             </a>

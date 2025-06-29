@@ -27,7 +27,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::middleware(['user_role:patient'])->prefix('patient')->as('patient.')->group(function () {
         Route::get('/dashboard', PatientDashboardLivewire::class)->name('dashboard');
 
+        // For patients viewing their own history (default)
         Route::get('/diagnosis-history', DiagnosisHistoryLivewire::class)->name('diagnosis.history');
+
+        // For doctors/admins viewing others’ histories
+        Route::get('/diagnosis-history/user/{user}', DiagnosisHistoryLivewire::class)->name('diagnosis.history.with.user');
     });
 
     Route::middleware(['user_role:doctor'])->prefix('doctor')->as('doctor.')->group(function () {
