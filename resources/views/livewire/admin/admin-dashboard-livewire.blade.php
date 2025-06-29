@@ -47,12 +47,18 @@
 
     <!-- Role Summary -->
     <div class="mt-5">
-        <div class="d-flex justify-content-between align-items-center mb-3">
+        <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
             <h4 class="mb-0">User Roles Overview</h4>
-            <button wire:click="toggleUserList" class="btn btn-sm btn-outline-primary">
-                {{ $showAllUsers ? 'Show Latest 10 Users' : 'Show All Users' }}
-            </button>
+
+            <div class="d-flex flex-wrap gap-2 align-items-center">
+                <input type="text" wire:model.live.debounce.10ms="search" placeholder="Search by name, ID, or phone"
+                    class="form-control" style="min-width: 250px;">
+                <button wire:click="toggleUserList" class="btn btn-outline-primary">
+                    {{ $showAllUsers ? 'Show Latest 10' : 'Show All Users' }}
+                </button>
+            </div>
         </div>
+
 
         <div class="table-responsive">
             <table class="table table-striped table-hover align-middle">
@@ -60,6 +66,7 @@
                     <tr>
                         <th>#</th>
                         <th>Name</th>
+                        <th>Id Number</th>
                         <th>Email</th>
                         <th>Roles</th>
                         <th>Joined</th>
@@ -69,7 +76,8 @@
                     @forelse ($users as $index => $user)
                         <tr>
                             <td>{{ $index + 1 }}</td>
-                            <td>{{ $user->first_name }} {{ $user->last_name }}</td>
+                            <td>{{ $user->name }}</td>
+                            <td>{{ $user->national_id_number }}</td>
                             <td>{{ $user->email }}</td>
                             <td>
                                 @foreach ($user->roles as $role)
@@ -85,6 +93,13 @@
                     @endforelse
                 </tbody>
             </table>
+
+            @if ($showAllUsers && $users instanceof \Illuminate\Pagination\LengthAwarePaginator)
+                <div class="mt-3">
+                    {{ $users->links('pagination::bootstrap-5') }}
+                </div>
+            @endif
+
         </div>
     </div>
 

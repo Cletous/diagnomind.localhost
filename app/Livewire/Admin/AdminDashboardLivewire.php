@@ -5,48 +5,60 @@ namespace App\Livewire\Admin;
 use App\Models\User;
 use App\Models\Hospital;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class AdminDashboardLivewire extends Component
 {
+    use WithPagination;
+
     public $userCount;
     public $doctorCount;
     public $patientCount;
     public $hospitalCount;
-    public $users;
-    public $showAllUsers = false;
 
+    public $showAllUsers = false;
+    public $search = '';
     public $title = 'Admin Dash';
 
-    public function mount()
-    {
-        $this->loadDashboardData();
-    }
+    protected $updatesQueryString = ['search'];
 
-    public function loadDashboardData()
+    public function mount()
     {
         $this->userCount = User::count();
         $this->doctorCount = User::whereHas('roles', fn($q) => $q->where('name', 'doctor'))->count();
         $this->patientCount = User::whereHas('roles', fn($q) => $q->where('name', 'patient'))->count();
         $this->hospitalCount = Hospital::count();
-
-        $this->loadUsers();
     }
 
-    public function loadUsers()
+    public function updatingSearch()
     {
-        $query = User::with('roles')->latest();
-        $this->users = $this->showAllUsers ? $query->get() : $query->take(10)->get();
+        $this->resetPage();
     }
 
     public function toggleUserList()
     {
         $this->showAllUsers = !$this->showAllUsers;
-        $this->loadUsers();
+        $this->resetPage();
     }
 
     public function render()
     {
-        return view('livewire.admin.admin-dashboard-livewire')
-            ->layout('components.layouts.admin.app', ['title' => ucfirst($this->title)]);
+        $users = User::with('roles')
+            ->when($this->search !== '', function ($q) {
+                $q->where(function ($q) {
+                    $q->where('first_name', 'like', '%' . $this->search . '%')
+                        ->orWhere('last_name', 'like', '%' . $this->search . '%')
+                        ->orWhere('national_id_number', 'like', '%' . $this->search . '%');
+                });
+            })
+            ->latest();
+
+        $paginatedUsers = $this->showAllUsers
+            ? $users->paginate(15)
+            : $users->take(10)->get();
+
+        return view('livewire.admin.admin-dashboard-livewire', [
+            'users' => $paginatedUsers
+        ])->layout('components.layouts.admin.app', ['title' => ucfirst($this->title)]);
     }
 }
