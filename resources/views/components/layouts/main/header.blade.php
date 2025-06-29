@@ -15,6 +15,8 @@
             @auth
                 <a href="{{ route('patient.dashboard') }}" class="btn btn-outline-primary me-2">Dashboard</a>
 
+                <a href="{{ route('profile') }}" class="btn btn-primary me-2">My Profile</a>
+
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
                     <button type="submit" class="btn btn-outline-danger">Logout</button>

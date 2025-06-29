@@ -42,7 +42,8 @@
                 </a>
             @endif
 
-            <form method="POST" action="{{ route('logout') }}" class="d-grid mt-3">
+            <a href="{{ route('profile') }}" class="btn btn-primary mt-4 mb-2 w-100">My Profile</a>
+            <form method="POST" action="{{ route('logout') }}" class="d-grid">
                 @csrf
                 <button type="submit" class="btn btn-outline-danger w-100">Logout</button>
             </form>

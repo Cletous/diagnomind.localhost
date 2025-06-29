@@ -1,5 +1,6 @@
 <?php
 
+use App\Livewire\User\ProfileLivewire;
 use Illuminate\Support\Facades\Auth;
 
 use App\Livewire\Guest\AuthLivewire;
@@ -24,6 +25,7 @@ Route::middleware('auth')->group(function () {
         ->name('verification.send');
 });
 
+Route::middleware(['auth'])->get('/profile', ProfileLivewire::class)->name('profile');
 
 Route::get('/login', AuthLivewire::class)->name('login');
 Route::get('/register', AuthLivewire::class)->name('register');
