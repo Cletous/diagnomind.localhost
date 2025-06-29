@@ -16,31 +16,40 @@ class DefaultUsersSeeder extends Seeder
         $doctorRole = Role::firstOrCreate(['name' => 'doctor'], ['label' => 'Doctor']);
         $patientRole = Role::firstOrCreate(['name' => 'patient'], ['label' => 'Patient']);
 
-        // Doctor
-        $doctor = User::updateOrCreate([
-            'national_id_number' => '631631768T27',
+        //Super Admin
+        $admin = User::updateOrCreate([
+            'national_id_number' => '111111111T01',
         ], [
-            'first_name' => 'Cletous',
-            'last_name' => 'Ngoma',
-            'email' => 'ngomacletousjnr@gmail.com',
-            'password' => Hash::make('password'),
+            'first_name' => 'Super',
+            'last_name' => 'Admin',
+            'email' => 'admin@test.com',
+            'password' => Hash::make('admin'),
             'email_verified_at' => now()
         ]);
-        $doctor->roles()->syncWithoutDetaching([$adminRole->id, $doctorRole->id]);
+        $admin->roles()->syncWithoutDetaching([$adminRole->id]);
 
-        // Patient
-        $patient = User::updateOrCreate([
-            'national_id_number' => '63163176T27',
+        // Doctors
+        $doctor1 = User::updateOrCreate([
+            'national_id_number' => '111111111T02',
         ], [
-            'first_name' => 'Application',
-            'last_name' => 'Mahobho',
-            'email' => 'mahobhoapplication@gmail.com',
-            'password' => Hash::make('password'),
+            'first_name' => 'Doctor',
+            'last_name' => 'One',
+            'email' => 'doctor1@test.com',
+            'password' => Hash::make('doctor'),
             'email_verified_at' => now()
         ]);
-        $patient->roles()->syncWithoutDetaching([$patientRole->id]);
+        $doctor2 = User::updateOrCreate([
+            'national_id_number' => '111111111T03',
+        ], [
+            'first_name' => 'Doctor',
+            'last_name' => 'Two',
+            'email' => 'doctor2@test.com',
+            'password' => Hash::make('doctor'),
+            'email_verified_at' => now()
+        ]);
+        $doctor2->roles()->syncWithoutDetaching([$doctorRole->id]);
 
-        // Create 20 test users
+        // Patients - Create 20 test users
         for ($i = 1; $i <= 20; $i++) {
             $email = "user{$i}@test.com";
             $nationalId = '1000000' . str_pad($i, 2, '0', STR_PAD_LEFT) . 'T' . str_pad($i, 2, '0', STR_PAD_LEFT);
@@ -51,7 +60,7 @@ class DefaultUsersSeeder extends Seeder
                 'first_name' => 'User',
                 'last_name' => (string) $i,
                 'national_id_number' => $nationalId,
-                'password' => Hash::make('password'),
+                'password' => Hash::make('patient'),
                 'email_verified_at' => now(),
             ]);
 
