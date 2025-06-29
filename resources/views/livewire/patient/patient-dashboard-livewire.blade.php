@@ -43,6 +43,9 @@
         <a href="{{ route('patient.self.diagnosis') }}" class="btn btn-outline-primary mb-2">
             Diagnose With AI
         </a>
+        <a href="{{ route('patient.diagnosis.history') }}" class="btn btn-primary mb-2">
+            My Medical History (All Records)
+        </a>
         <div class="table-responsive">
             <table class="table table-hover align-middle">
                 <thead class="table-light">

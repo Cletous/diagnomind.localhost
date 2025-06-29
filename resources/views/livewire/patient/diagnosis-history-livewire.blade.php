@@ -87,8 +87,7 @@
                 </p>
 
                 {{-- Feedback Button --}}
-                <button class="btn btn-sm btn-outline-primary mt-2"
-                    wire:click="$emit('openFeedbackModal', {{ $diagnosis->id }})">
+                <button wire:click="openFeedback({{ $diagnosis->id }})" class="btn btn-sm btn-outline-primary mt-2">
                     Rate / Feedback
                 </button>
             </div>

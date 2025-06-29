@@ -2,69 +2,80 @@
 
 namespace App\Livewire\Patient;
 
-use App\Models\AiFeedback;
 use App\Models\DiagnosisRequest;
+use App\Models\DoctorReview;
+use App\Models\HospitalReview;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class DiagnosisFeedbackLivewire extends Component
 {
+    protected $listeners = ['openFeedbackModal' => 'open'];
+
     public $diagnosisId;
-    public $comment = '';
-    public $rating = 'none'; // like, dislike, none
     public $showModal = false;
-    public $title = 'Diagnosis Feedback';
+
+    public $doctor_rating;
+    public $doctor_review;
+    public $hospital_rating;
+    public $hospital_review;
 
     protected $rules = [
-        'rating' => 'required|in:like,dislike,none',
-        'comment' => 'nullable|string|max:1000',
+        'doctor_rating' => 'nullable|integer|min:1|max:5',
+        'doctor_review' => 'nullable|string|max:1000',
+        'hospital_rating' => 'nullable|integer|min:1|max:5',
+        'hospital_review' => 'nullable|string|max:1000',
     ];
 
-    protected $listeners = ['openFeedbackModal' => 'loadDiagnosis'];
 
-    public function loadDiagnosis($diagnosisId)
+    public function open($diagnosisId)
     {
         $this->diagnosisId = $diagnosisId;
-        $this->reset(['comment', 'rating']);
-
-        $existing = AiFeedback::where('diagnosis_request_id', $diagnosisId)
-            ->where('doctor_id', Auth::id()) // or use `patient_id` if stored differently
-            ->first();
-
-        if ($existing) {
-            $this->comment = $existing->comment;
-            $this->rating = $existing->diagnosis->rating ?? 'none';
-        }
-
+        $this->reset(['doctor_rating', 'doctor_review', 'hospital_rating', 'hospital_review']);
         $this->showModal = true;
     }
 
-    public function submitFeedback()
+    public function submit()
     {
         $this->validate();
 
-        $diagnosis = DiagnosisRequest::where('id', $this->diagnosisId)
-            ->where('patient_id', Auth::id())
-            ->firstOrFail();
+        $diagnosis = DiagnosisRequest::with(['doctor', 'hospital'])->findOrFail($this->diagnosisId);
 
-        $diagnosis->update(['rating' => $this->rating]);
+        // Doctor Review
+        if ($diagnosis->doctor && $this->doctor_rating && $this->doctor_review) {
+            DoctorReview::updateOrCreate(
+                [
+                    'doctor_id' => $diagnosis->doctor->id,
+                    'patient_id' => Auth::id(),
+                ],
+                [
+                    'rating' => $this->doctor_rating,
+                    'review' => $this->doctor_review,
+                ]
+            );
+        }
 
-        AiFeedback::updateOrCreate(
-            [
-                'diagnosis_request_id' => $this->diagnosisId,
-                'doctor_id' => $diagnosis->doctor_id,
-            ],
-            ['comment' => $this->comment]
-        );
+        // Hospital Review
+        if ($diagnosis->hospital && $this->hospital_rating && $this->hospital_review) {
+            HospitalReview::updateOrCreate(
+                [
+                    'hospital_id' => $diagnosis->hospital->id,
+                    'patient_id' => Auth::id(),
+                ],
+                [
+                    'rating' => $this->hospital_rating,
+                    'review' => $this->hospital_review,
+                ]
+            );
+        }
 
-        session()->flash('success', 'Feedback submitted successfully.');
+        $this->dispatch('closeModal');
         $this->showModal = false;
         $this->dispatch('feedbackSubmitted');
     }
 
     public function render()
     {
-        return view('livewire.patient.diagnosis-feedback-livewire')->layout('components.layouts.patient.app', ['title' => ucfirst($this->title)]);
-        ;
+        return view('livewire.patient.diagnosis-feedback-livewire');
     }
 }

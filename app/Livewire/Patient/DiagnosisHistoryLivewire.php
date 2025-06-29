@@ -83,6 +83,11 @@ class DiagnosisHistoryLivewire extends Component
         $this->fetchDiagnoses();
     }
 
+    public function openFeedback($diagnosisId)
+    {
+        $this->dispatch('openFeedbackModal', $diagnosisId);
+    }
+
     public function render()
     {
         return view('livewire.patient.diagnosis-history-livewire')
