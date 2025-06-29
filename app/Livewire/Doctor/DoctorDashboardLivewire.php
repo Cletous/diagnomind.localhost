@@ -10,6 +10,7 @@ class DoctorDashboardLivewire extends Component
 {
     public $hospitalCount;
     public $diagnosedPatientsCount;
+    public $title = 'Doctor Dashboard';
 
     public function mount()
     {
@@ -24,6 +25,6 @@ class DoctorDashboardLivewire extends Component
 
     public function render()
     {
-        return view('livewire.doctor.doctor-dashboard-livewire');
+        return view('livewire.doctor.doctor-dashboard-livewire')->layout('components.layouts.doctor.app', ['title' => ucfirst($this->title)]);
     }
 }

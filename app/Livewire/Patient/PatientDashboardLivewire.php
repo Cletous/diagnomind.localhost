@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 class PatientDashboardLivewire extends Component
 {
     public $diagnoses;
+    public $title = 'Patient Dash';
 
     public function mount()
     {
@@ -21,6 +22,6 @@ class PatientDashboardLivewire extends Component
 
     public function render()
     {
-        return view('livewire.patient.dashboard');
+        return view('livewire.patient.dashboard')->layout('components.layouts.patient.app', ['title' => ucfirst($this->title)]);
     }
 }

@@ -13,6 +13,8 @@ class DiagnosisHistoryLivewire extends Component
     public $hospitalFilter = '';
     public $dateFilter = '';
     public $hospitals;
+    public $title = 'Diagnosis History';
+
 
     public function mount()
     {
@@ -48,6 +50,6 @@ class DiagnosisHistoryLivewire extends Component
 
     public function render()
     {
-        return view('livewire.patient.diagnosis-history-livewire');
+        return view('livewire.patient.diagnosis-history-livewire')->layout('components.layouts.patient.app', ['title' => ucfirst($this->title)]);
     }
 }

@@ -20,6 +20,8 @@ class GetAiDiagnosisLivewire extends Component
     public $hospitals = [];
     public $selected_hospital_id;
 
+    public $title = 'Get AI Diagnpsis';
+
     public function mount()
     {
         // Load hospitals linked to the logged-in doctor
@@ -82,6 +84,7 @@ class GetAiDiagnosisLivewire extends Component
 
     public function render()
     {
-        return view('livewire.doctor.get-ai-diagnosis');
+        return view('livewire.doctor.get-ai-diagnosis')->layout('components.layouts.doctor.app', ['title' => ucfirst($this->title)]);
+        ;
     }
 }

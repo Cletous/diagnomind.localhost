@@ -13,6 +13,7 @@ class DiagnosisFeedbackLivewire extends Component
     public $comment = '';
     public $rating = 'none'; // like, dislike, none
     public $showModal = false;
+    public $title = 'Diagnosis Feedback';
 
     protected $rules = [
         'rating' => 'required|in:like,dislike,none',
@@ -63,6 +64,7 @@ class DiagnosisFeedbackLivewire extends Component
 
     public function render()
     {
-        return view('livewire.patient.diagnosis-feedback-livewire');
+        return view('livewire.patient.diagnosis-feedback-livewire')->layout('components.layouts.patient.app', ['title' => ucfirst($this->title)]);
+        ;
     }
 }

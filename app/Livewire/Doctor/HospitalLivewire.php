@@ -132,6 +132,6 @@ class HospitalLivewire extends Component
 
     public function render()
     {
-        return view('livewire.doctor.hospital-livewire');
+        return view('livewire.doctor.hospital-livewire')->layout('components.layouts.doctor.app', ['title' => ucfirst($this->mode)]);
     }
 }
