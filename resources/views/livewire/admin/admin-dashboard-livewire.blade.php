@@ -47,7 +47,13 @@
 
     <!-- Role Summary -->
     <div class="mt-5">
-        <h4 class="mb-3">User Roles Overview</h4>
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h4 class="mb-0">User Roles Overview</h4>
+            <button wire:click="toggleUserList" class="btn btn-sm btn-outline-primary">
+                {{ $showAllUsers ? 'Show Latest 10 Users' : 'Show All Users' }}
+            </button>
+        </div>
+
         <div class="table-responsive">
             <table class="table table-striped table-hover align-middle">
                 <thead class="table-light">
@@ -81,4 +87,5 @@
             </table>
         </div>
     </div>
+
 </div>
