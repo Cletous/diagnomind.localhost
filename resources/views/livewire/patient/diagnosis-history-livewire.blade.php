@@ -5,7 +5,7 @@
     <div class="row mb-4">
         <div class="col-md-4">
             <label for="hospitalFilter">Filter by Hospital:</label>
-            <select wire:model="hospitalFilter" class="form-select">
+            <select wire:model.live.debounce.10ms="hospitalFilter" class="form-select">
                 <option value="">-- All Hospitals --</option>
                 @foreach ($hospitals as $hospital)
                     <option value="{{ $hospital->id }}">{{ $hospital->name }}</option>
@@ -15,7 +15,7 @@
 
         <div class="col-md-4">
             <label for="dateFilter">Filter by Date:</label>
-            <input type="date" wire:model="dateFilter" class="form-control" />
+            <input type="date" wire:model.live.debounce.10ms="dateFilter" class="form-control" />
         </div>
     </div>
 
@@ -39,7 +39,8 @@
                         Not Rated
                     @endif
                     <br>
-                    <small class="text-muted">Submitted {{ $diagnosis->created_at->diffForHumans() }}</small>
+                    <small class="text-muted">Diagnosed on:
+                        {{ $diagnosis->created_at->format('D, d M Y @ h:i a') }}</small>
                 </p>
 
                 {{-- Feedback Button --}}

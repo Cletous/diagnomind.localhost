@@ -26,13 +26,20 @@
 
             <a href="{{ route('doctor.get.diagnosis') }}" class="btn btn-outline-primary w-100 mb-2">AI Diagnosis</a>
 
+            <a href="{{ route('doctor.patients.records') }}" class="btn btn-outline-primary w-100 mb-2">
+                My Patients
+            </a>
+
             @if (auth()->user()->hasRole('patient'))
-                <a href="{{ route('patient.dashboard') }}" class="btn btn-outline-secondary w-100 mb-2">Switch to
-                    Patient</a>
+                <a href="{{ route('patient.dashboard') }}" class="btn btn-outline-secondary w-100 mb-2">
+                    Switch to Patient
+                </a>
             @endif
 
             @if (auth()->user()->hasRole('admin'))
-                <a href="{{ route('admin.dashboard') }}" class="btn btn-outline-dark w-100 mb-2">Switch to Admin</a>
+                <a href="{{ route('admin.dashboard') }}" class="btn btn-outline-dark w-100 mb-2">
+                    Switch to Admin
+                </a>
             @endif
 
             <form method="POST" action="{{ route('logout') }}" class="d-grid mt-3">

@@ -5,6 +5,7 @@ use App\Livewire\Admin\ManageUserRolesLivewire;
 use App\Livewire\Doctor\DoctorDashboardLivewire;
 use App\Livewire\Doctor\GetAiDiagnosisLivewire;
 use App\Livewire\Doctor\HospitalLivewire;
+use App\Livewire\Doctor\PatientsMedicalRecordsLivewire;
 use App\Livewire\Guest\HomeLivewire;
 use App\Livewire\Patient\DiagnosisHistoryLivewire;
 use App\Livewire\Patient\PatientDashboardLivewire;
@@ -38,6 +39,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/hospitals/create', HospitalLivewire::class)->name('hospitals.create');
         Route::get('/hospitals/{hospital}/edit', HospitalLivewire::class)->name('hospitals.edit')->can('update', [Hospital::class, '{hospital}' => 'hospital']);
         Route::get('/hospitals/{hospital}/invite', HospitalLivewire::class)->name('hospitals.invite')->can('invite', [Hospital::class, '{hospital}' => 'hospital']);
+
+        Route::get('/patients-records', PatientsMedicalRecordsLivewire::class)->name('patients.records');
     });
 
     Route::middleware(['user_role:admin'])->prefix('admin')->as('admin.')->group(function () {

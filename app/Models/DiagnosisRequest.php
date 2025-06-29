@@ -15,6 +15,7 @@ class DiagnosisRequest extends Model
         'prompt',
         'ai_response',
         'rating',
+        'hospital_id'
     ];
 
     public function doctor()
@@ -26,4 +27,10 @@ class DiagnosisRequest extends Model
     {
         return $this->belongsTo(User::class, 'patient_id');
     }
+
+    public function hospital()
+    {
+        return $this->belongsTo(Hospital::class);
+    }
+
 }

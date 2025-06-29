@@ -109,4 +109,8 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Hospital::class, 'admin_id');
     }
 
+    public function diagnosisRequests()
+    {
+        return $this->hasMany(DiagnosisRequest::class, 'patient_id');
+    }
 }
