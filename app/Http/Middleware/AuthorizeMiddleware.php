@@ -13,6 +13,10 @@ class AuthorizeMiddleware
             return redirect()->route('login');
         }
 
+        if (Auth::check() && $role === 'patient') {
+            return $next($request);
+        }
+
         if (!Auth::user()->hasRole($role)) {
             abort(403, 'Unauthorized. You dont have the required role!');
         }
