@@ -32,7 +32,7 @@ class DefaultUsersSeeder extends Seeder
         $doctor1 = User::updateOrCreate([
             'national_id_number' => '111111111T02',
         ], [
-            'first_name' => 'Doctor',
+            'first_name' => 'Mendy',
             'last_name' => 'One',
             'email' => 'doctor1@test.com',
             'password' => Hash::make('doctor'),
@@ -43,7 +43,7 @@ class DefaultUsersSeeder extends Seeder
         $doctor2 = User::updateOrCreate([
             'national_id_number' => '111111111T03',
         ], [
-            'first_name' => 'Doctor',
+            'first_name' => 'Gredy',
             'last_name' => 'Two',
             'email' => 'doctor2@test.com',
             'password' => Hash::make('doctor'),
