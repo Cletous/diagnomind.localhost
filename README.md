@@ -1,61 +1,148 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+---
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+```markdown
+# DiagnoMind – AI-Powered Medical Diagnosis System
 
-## About Laravel
+[![Laravel](https://img.shields.io/badge/Laravel-12.x-red?logo=laravel)](https://laravel.com/)
+[![Python](https://img.shields.io/badge/Flask-Python-blue?logo=python)](https://flask.palletsprojects.com/)
+[![MySQL](https://img.shields.io/badge/MySQL-8.0+-lightgrey?logo=mysql)](https://www.mysql.com/)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+DiagnoMind is a full-stack medical diagnosis system built with **Laravel + Livewire** and integrated with an **AI diagnosis server using Flask (Python)**. Doctors can submit symptoms, receive AI-generated suggestions, manage hospitals, and track patient feedback. Patients can access diagnosis history and provide ratings or comments.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+---
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Getting Started (Development Setup)
 
-## Learning Laravel
+### 1. Download or Clone the Project
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Extract or clone the project folder:
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+diagnomind-projects/
+├── diagnomind-ai-server/     # Python Flask AI engine
+└── diagnomind.localhost/     # Laravel web frontend
 
-## Laravel Sponsors
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+---
 
-### Premium Partners
+### 2. Start the AI Diagnosis Server
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+```bash
+cd diagnomind-projects/diagnomind-ai-server
+python app.py
+```
+
+This runs the Flask server at: `http://127.0.0.1:8000/predict`
+
+---
+
+### 3. Configure Laravel Environment
+
+```bash
+cd ../diagnomind.localhost
+cp .env.example .env
+```
+
+Update `.env` file to match your database credentials:
+
+```dotenv
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=diagnomind
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+---
+
+### 4. Install PHP Dependencies
+
+Ensure you have Composer installed, then run:
+
+```bash
+composer install
+```
+
+---
+
+### 5. Run Migrations and Seeders
+
+This will reset and seed your database:
+
+```bash
+php artisan migrate:fresh --seed
+```
+
+---
+
+### 6. Default User Accounts
+
+| Role         | Email                                | Password  |
+| ------------ | ------------------------------------ | --------- |
+| **Admin**    | `admin@test.com`                     | `admin`   |
+| **Doctors**  | `doctor1@test.com`                   | `doctor`  |
+|              | `doctor2@gmail.com`                  | `doctor`  |
+| **Patients** | `user1@test.com` → `user20@test.com` | `patient` |
+
+---
+
+### 7. Start Laravel Development Server
+
+```bash
+php artisan serve
+```
+
+Visit: [http://127.0.0.1:8000](http://127.0.0.1:8000)
+
+---
+
+## Key Features
+
+-   Role-based Access (Admin, Doctor, Patient)
+-   AI Symptom-to-Diagnosis engine (via Flask)
+-   Hospital Management & Invitations
+-   Diagnosis History & Filtering
+-   Feedback & Ratings for Diagnoses
+
+---
+
+## Tech Stack
+
+-   **Backend:** Laravel 12, Livewire, MySQL
+-   **AI Engine:** Flask + Python
+-   **UI:** Bootstrap 5.3
+-   **Auth:** Email Verification, Role Management
+
+---
 
 ## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Contributions are welcome. Fork the repo and submit a PR!
 
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+---
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This project is licensed under the [MIT License](LICENSE).
+
+---
+
+## Contact
+
+Maintained by **UZ Computer Engineering Students** Part 2 **Group Project with the following members:**
+Cletous Ngoma R196481X - [ngomacletousjnr@gmail.com](mailto:ngomacletousjnr@gmail.com)
+TAKUDZWANASHE H NGAISO R231702X
+TALENT NECHITUKIRE R1810926
+SHELTON MUTAMBIRWA R231684F
+PATRICIA MUKUNZA R231733N
+TADIWA NCUBE R231692S
+
+---
+
+```
+
+```
