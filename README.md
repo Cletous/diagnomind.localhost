@@ -32,7 +32,7 @@ cd diagnomind-projects/diagnomind-ai-server
 python app.py
 ```
 
-This runs the Flask server at: `http://127.0.0.1:8000/predict`
+This runs the Flask server at: `http://127.0.0.1:2500/predict`
 
 ---
 

@@ -17,10 +17,11 @@ class DatabaseSeeder extends Seeder
         $this->call([
             RolesSeeder::class,
             DefaultUsersSeeder::class,
+            HospitalsSeeder::class,
         ]);
 
         // Inside run() method after creating users
-        $doctor = User::where('national_id_number', '111111111T01', )->first();
+        $doctor = User::where('national_id_number', '111111111T02', )->first();
         $patient = User::where('national_id_number', '100000001T01', )->first();
 
         DiagnosisRequest::create([

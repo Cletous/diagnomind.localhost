@@ -59,7 +59,7 @@ class GetAiDiagnosisLivewire extends Component
 
         // Call AI API
         try {
-            $response = Http::post('http://127.0.0.1:8000/predict', [
+            $response = Http::post('http://127.0.0.1:2500/predict', [
                 'inputs' => $this->prompt,
             ]);
 
