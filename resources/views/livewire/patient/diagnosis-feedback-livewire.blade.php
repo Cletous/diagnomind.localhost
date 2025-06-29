@@ -19,10 +19,17 @@
                                         <option value="{{ $i }}">{{ $i }}</option>
                                     @endfor
                                 </select>
+                                @error('doctor_rating')
+                                    <div class="text-danger small">{{ $message }}</div>
+                                @enderror
                             </div>
+
                             <div class="mb-3">
                                 <label>Review</label>
                                 <textarea class="form-control" wire:model.defer="doctor_review"></textarea>
+                                @error('doctor_review')
+                                    <div class="text-danger small">{{ $message }}</div>
+                                @enderror
                             </div>
 
                             <h6>Hospital Feedback</h6>
@@ -34,10 +41,17 @@
                                         <option value="{{ $i }}">{{ $i }}</option>
                                     @endfor
                                 </select>
+                                @error('hospital_rating')
+                                    <div class="text-danger small">{{ $message }}</div>
+                                @enderror
                             </div>
+
                             <div class="mb-3">
                                 <label>Review</label>
                                 <textarea class="form-control" wire:model.defer="hospital_review"></textarea>
+                                @error('hospital_review')
+                                    <div class="text-danger small">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
 
