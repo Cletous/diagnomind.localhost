@@ -49,6 +49,27 @@ class User extends Authenticatable implements MustVerifyEmail
         ];
     }
 
+    public function assignRole($roleName)
+    {
+        $role = Role::where('name', $roleName)->firstOrFail();
+        if (!$this->roles()->where('role_id', $role->id)->exists()) {
+            $this->roles()->attach($role->id);
+        }
+    }
+
+    public function removeRole($roleName)
+    {
+        $role = Role::where('name', $roleName)->first();
+        if ($role) {
+            $this->roles()->detach($role->id);
+        }
+    }
+
+    public function getRoleNames()
+    {
+        return $this->roles()->pluck('name')->toArray();
+    }
+
     public function diagnosesGiven()
     {
         return $this->hasMany(DiagnosisRequest::class, 'doctor_id');

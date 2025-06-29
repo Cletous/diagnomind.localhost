@@ -1,5 +1,5 @@
 <div class="container py-4">
-    <h2 class="fw-bold mb-4">Manage User Roles 🧑‍⚕️</h2>
+    <h2 class="fw-bold mb-4">Manage User Roles</h2>
 
     <div class="table-responsive">
         <table class="table table-hover align-middle">
