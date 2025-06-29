@@ -25,7 +25,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::prefix('doctor')->as('doctor.')->group(function () {
         Route::get('/dashboard', DoctorDashboardLivewire::class)->name('dashboard');
 
-        Route::get('/get-diagnosis', GetAiDiagnosisLivewire::class)->name('get.diagnosis');
+        Route::get('/get-ai-diagnosis', GetAiDiagnosisLivewire::class)->name('get.diagnosis');
 
         Route::get('/hospitals', HospitalLivewire::class)->name('hospitals.index');
         Route::get('/hospitals/create', HospitalLivewire::class)->name('hospitals.create');
