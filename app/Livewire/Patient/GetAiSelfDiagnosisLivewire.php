@@ -30,7 +30,7 @@ class GetAiSelfDiagnosisLivewire extends Component
         $this->validate([
             'prompt' => 'required|string',
             'selected_hospital_id' => 'nullable|exists:hospitals,id',
-        ]);
+        ], [], ['selected_hospital_id' => 'hospital']);
 
         // Check if patient has already submitted today
         $alreadySubmitted = DiagnosisRequest::where('patient_id', auth()->id())

@@ -83,7 +83,7 @@ class GetAiDiagnosisLivewire extends Component
         $this->validate([
             'prompt' => 'required|string',
             'selected_hospital_id' => 'required|exists:hospitals,id',
-        ]);
+        ], [], ['selected_hospital_id' => 'hospital']);
 
         if (!$this->patient) {
             $this->addError('national_id_number', 'Please search for a valid patient first.');
