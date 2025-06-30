@@ -16,9 +16,55 @@
         <button type="submit" class="btn btn-primary">Find Patient</button>
     </form>
 
+    @if ($createPatientForm && !$patient)
+        <div class="alert alert-warning mt-3">
+            <strong>No patient found with this ID.</strong> <br>
+            Would you like to create one?
+        </div>
+
+        <form wire:submit.prevent="createPatient" class="mb-4">
+            <div class="mb-3">
+                <label>National Id Number</label>
+                <input type="text" wire:model.defer="national_id_number" class="form-control">
+                @error('national_id_number')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <div class="mb-3">
+                <label>First Name</label>
+                <input type="text" wire:model.defer="new_patient_first_name" class="form-control">
+                @error('new_patient_first_name')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <div class="mb-3">
+                <label>Last Name</label>
+                <input type="text" wire:model.defer="new_patient_last_name" class="form-control">
+                @error('new_patient_last_name')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <div class="mb-3">
+                <label>Email Address</label>
+                <input type="email" wire:model.defer="new_patient_email" class="form-control">
+                @error('new_patient_email')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <button type="submit" class="btn btn-outline-success">Create Patient</button>
+        </form>
+    @endif
+
     @if ($patient)
         <div class="alert alert-info">
-            Patient found: {{ $patient->first_name }} {{ $patient->last_name }} ({{ $patient->email }})
+            <div class="text-decoration-underline fw-bold">Patient found:</div>
+            <div><span class="fw-bold">Name:</span> {{ $patient->name }}</div>
+            <div><span class="fw-bold">Id:</span> {{ $patient->national_id_number }}</div>
+            <div><span class="fw-bold">Email:</span> {{ $patient->email }}</div>
         </div>
 
         <form wire:submit.prevent="submit">

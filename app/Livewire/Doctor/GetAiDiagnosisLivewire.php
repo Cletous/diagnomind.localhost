@@ -22,6 +22,11 @@ class GetAiDiagnosisLivewire extends Component
     public $hospitals = [];
     public $selected_hospital_id;
 
+    public $createPatientForm = false;
+    public $new_patient_first_name;
+    public $new_patient_last_name;
+    public $new_patient_email;
+
     public $title = 'Get AI Diagnpsis';
 
     public function mount()
@@ -33,14 +38,44 @@ class GetAiDiagnosisLivewire extends Component
     public function findPatient()
     {
         $this->validate([
-            'national_id_number' => 'required|string',
+            'national_id_number' => 'required|regex:/^\d{8,9}[A-Z]\d{2}$/',
+        ], [
+            'national_id_number.regex' =>
+                'The national id number must be in the format NNNNNNNNLNN or NNNNNNNNNLNN where N is a Number and L a capital letter.'
         ]);
 
         $this->patient = User::where('national_id_number', $this->national_id_number)->first();
 
         if (!$this->patient) {
             $this->addError('national_id_number', 'No patient found with this ID.');
+            $this->createPatientForm = true;
         }
+    }
+
+    public function createPatient()
+    {
+        $this->validate([
+            'new_patient_first_name' => 'required|string|max:100',
+            'new_patient_last_name' => 'required|string|max:100',
+            'new_patient_email' => 'required|email|unique:users,email',
+            'national_id_number' => 'required|regex:/^\d{8,9}[A-Z]\d{2}$/|unique:users,national_id_number',
+        ]);
+
+        $user = User::create([
+            'first_name' => $this->new_patient_first_name,
+            'last_name' => $this->new_patient_last_name,
+            'email' => $this->new_patient_email,
+            'national_id_number' => $this->national_id_number,
+            'password' => bcrypt('patient'), // Default password
+        ]);
+
+        // Attach 'patient' role if using roles
+        $user->assignRole('patient');
+
+        $this->patient = $user;
+        $this->resetValidation();
+        $this->createPatientForm = false;
+        session()->flash('message', 'Patient created successfully.');
     }
 
     public function submit()
