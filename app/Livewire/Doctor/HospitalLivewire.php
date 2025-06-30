@@ -3,6 +3,7 @@
 namespace App\Livewire\Doctor;
 
 use App\Models\Hospital;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
@@ -103,6 +104,8 @@ class HospitalLivewire extends Component
 
     public function invite()
     {
+        $doctorRole = Role::firstOrCreate(['name' => 'doctor'], ['label' => 'Doctor']);
+
         $this->validate([
             'inviteEmail' => 'required|email|exists:users,email',
         ]);
@@ -119,8 +122,7 @@ class HospitalLivewire extends Component
 
         // Attach doctor
         $hospital->doctors()->syncWithoutDetaching($doctor->id);
-
-        // Optionally: fire an event or notification
+        $doctor->roles()->syncWithoutDetaching([$doctorRole->id]);
 
         $this->reset('inviteEmail');
         session()->flash('success', 'Doctor invited successfully.');
