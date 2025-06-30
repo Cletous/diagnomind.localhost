@@ -22,10 +22,6 @@ Route::fallback(function () {
 Route::get('/', HomeLivewire::class)->name('home');
 Route::get('/hospitals', HospitalsListingLivewire::class)->name('hospitals');
 
-Route::view('profile', 'profile')
-    ->middleware(['auth'])
-    ->name('profile');
-
 Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::middleware(['user_role:patient'])->prefix('patient')->as('patient.')->group(function () {

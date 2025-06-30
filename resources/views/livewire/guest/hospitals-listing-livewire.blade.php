@@ -22,7 +22,7 @@
                             <p class="mb-1">
                                 <strong>Average Rating:</strong>
                                 @if ($hospital->reviews_count)
-                                    ⭐ {{ number_format($hospital->average_rating, 1) }}/5
+                                    ⭐ {{ number_format($hospital->reviews_avg_rating, 1) }}/5
                                     ({{ $hospital->reviews_count }} review{{ $hospital->reviews_count > 1 ? 's' : '' }})
                                 @else
                                     <span class="text-muted">No reviews yet</span>

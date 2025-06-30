@@ -16,7 +16,7 @@ class HospitalsListingLivewire extends Component
     public function render()
     {
         $hospitals = Hospital::select('hospitals.*')
-            ->withCount('doctors')
+            ->withCount(['doctors', 'reviews'])
             ->withAvg('reviews', 'rating')
             ->orderBy('name')
             ->paginate(10);
