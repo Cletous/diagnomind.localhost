@@ -18,6 +18,8 @@ class DatabaseSeeder extends Seeder
             RolesSeeder::class,
             DefaultUsersSeeder::class,
             HospitalsSeeder::class,
+            HospitalReviewsSeeder::class,
+            DoctorReviewsSeeder::class,
         ]);
 
         // Inside run() method after creating users

@@ -69,7 +69,7 @@ class HospitalLivewire extends Component
             'email' => $this->email,
         ]);
 
-        $hospital->doctors()->attach(Auth::id());
+        $hospital->doctors()->syncWithoutDetaching(Auth::id());
 
         session()->flash('success', 'Hospital created successfully.');
         return redirect()->route('doctor.hospitals.index');
@@ -118,7 +118,7 @@ class HospitalLivewire extends Component
         }
 
         // Attach doctor
-        $hospital->doctors()->attach($doctor->id);
+        $hospital->doctors()->syncWithoutDetaching($doctor->id);
 
         // Optionally: fire an event or notification
 

@@ -182,7 +182,7 @@ class AuthLivewire extends Component
         ]);
 
         $role = Role::where('name', 'patient')->first();
-        $user->roles()->attach($role->id);
+        $user->roles()->syncWithoutDetaching($role->id);
 
         session()->forget('register_data');
 

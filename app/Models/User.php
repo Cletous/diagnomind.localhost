@@ -62,7 +62,7 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         $role = Role::where('name', $roleName)->firstOrFail();
         if (!$this->roles()->where('role_id', $role->id)->exists()) {
-            $this->roles()->attach($role->id);
+            $this->roles()->syncWithoutDetaching($role->id);
         }
     }
 

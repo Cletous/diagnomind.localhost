@@ -68,7 +68,7 @@ class HospitalsSeeder extends Seeder
                 ]
             );
 
-            $hospital->doctors()->attach([$doctor1->id, $doctor2->id]);
+            $hospital->doctors()->syncWithoutDetaching([$doctor1->id, $doctor2->id]);
         }
     }
 }
