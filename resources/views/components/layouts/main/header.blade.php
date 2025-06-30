@@ -3,7 +3,6 @@
         {{-- Brand Logo --}}
         <a class="navbar-brand d-flex align-items-center" href="{{ route('home') }}">
             <img src="{{ asset('assets/img/logo/logo.png') }}" alt="DiagnoMind Logo" height="40" class="me-2">
-            <span class="fw-bold text-primary fs-5">DiagnoMind</span>
         </a>
 
         {{-- Mobile Toggle --}}
