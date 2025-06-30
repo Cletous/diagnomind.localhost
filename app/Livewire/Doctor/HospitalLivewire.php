@@ -16,7 +16,7 @@ class HospitalLivewire extends Component
     public $hospitals;
     public $hospitalId;
     public $name;
-    public $address;
+    public $address, $phone, $email;
 
     public $inviteEmail;
     public $invitedDoctors = [];
@@ -48,6 +48,8 @@ class HospitalLivewire extends Component
         $this->hospitalId = $hospital->id;
         $this->name = $hospital->name;
         $this->address = $hospital->address;
+        $this->phone = $hospital->phone;
+        $this->email = $hospital->email;
     }
 
     public function store()
@@ -55,12 +57,16 @@ class HospitalLivewire extends Component
         $validated = $this->validate([
             'name' => 'required|string|max:255',
             'address' => 'nullable|string|max:1000',
+            'phone' => 'nullable|phone|max:20',
+            'email' => 'nullable|email|max:255',
         ]);
 
         $hospital = Hospital::create([
             'name' => $this->name,
             'address' => $this->address,
             'admin_id' => Auth::id(),
+            'phone' => $this->phone,
+            'email' => $this->email,
         ]);
 
         $hospital->doctors()->attach(Auth::id());
@@ -71,6 +77,13 @@ class HospitalLivewire extends Component
 
     public function update()
     {
+        $validated = $this->validate([
+            'name' => 'required|string|max:255',
+            'address' => 'nullable|string|max:1000',
+            'phone' => 'nullable|phone|max:20',
+            'email' => 'nullable|email|max:255',
+        ]);
+
         $hospital = Hospital::findOrFail($this->hospitalId);
 
         if ($hospital->admin_id !== Auth::id()) {
@@ -81,6 +94,7 @@ class HospitalLivewire extends Component
             'name' => $this->name,
             'address' => $this->address,
             'phone' => $this->phone,
+            'email' => $this->email,
         ]);
 
         session()->flash('success', 'Hospital updated successfully.');

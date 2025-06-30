@@ -28,6 +28,20 @@
                 @enderror
             </div>
             <div class="mb-3">
+                <label class="form-label">Hospital Phone Number</label>
+                <input type="text" wire:model.defer="phone" class="form-control">
+                @error('phone')
+                    <small class="text-danger">{{ $message }}</small>
+                @enderror
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Hospital Email Address</label>
+                <input type="text" wire:model.defer="email" class="form-control">
+                @error('email')
+                    <small class="text-danger">{{ $message }}</small>
+                @enderror
+            </div>
+            <div class="mb-3">
                 <label class="form-label">Address</label>
                 <textarea wire:model.defer="address" class="form-control"></textarea>
             </div>
