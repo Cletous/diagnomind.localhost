@@ -80,6 +80,7 @@ class HospitalLivewire extends Component
         $hospital->update([
             'name' => $this->name,
             'address' => $this->address,
+            'phone' => $this->phone,
         ]);
 
         session()->flash('success', 'Hospital updated successfully.');
