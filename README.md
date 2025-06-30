@@ -37,7 +37,7 @@ diagnomind-projects/
 ### 2. Start the AI Diagnosis Server
 
 ```bash
-cd /diagnomind-ai-server
+cd diagnomind-ai-server
 python app.py
 ```
 
