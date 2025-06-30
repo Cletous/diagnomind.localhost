@@ -33,6 +33,11 @@
                                 <strong>Doctors:</strong> {{ $hospital->doctors_count }}
                                 doctor{{ $hospital->doctors_count !== 1 ? 's' : '' }}
                             </p>
+                            <a href="{{ route('hospital.reviews', $hospital->id) }}"
+                                class="btn btn-outline-primary btn-sm mt-2">
+                                View Reviews
+                            </a>
+
                         </div>
                     </div>
                 </div>

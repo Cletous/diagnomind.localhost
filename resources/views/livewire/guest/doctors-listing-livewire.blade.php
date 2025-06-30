@@ -25,6 +25,11 @@
                                     <span class="text-muted">No reviews yet</span>
                                 @endif
                             </p>
+                            <a href="{{ route('doctor.reviews', $doctor->id) }}"
+                                class="btn btn-outline-primary btn-sm mt-2">
+                                View Reviews
+                            </a>
+
                         </div>
                     </div>
                 </div>
