@@ -145,7 +145,7 @@ php artisan migrate:fresh --seed
 
 ### 6. Default User Accounts
 
-| Role         | Email                                | Password  | Natioanal Id                    |
+| Role         | Email                                | Password  | Natioanal Id Number             |
 | ------------ | ------------------------------------ | --------- | ------------------------------- |
 | **Admin**    | `admin@test.com`                     | `admin`   | `111111111T01`                  |
 | **Doctors**  | `doctor1@test.com`                   | `doctor`  | `111111111T02`                  |
