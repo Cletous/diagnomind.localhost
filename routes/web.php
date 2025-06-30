@@ -6,6 +6,7 @@ use App\Livewire\Doctor\DoctorDashboardLivewire;
 use App\Livewire\Doctor\GetAiDiagnosisLivewire;
 use App\Livewire\Doctor\HospitalLivewire;
 use App\Livewire\Doctor\PatientsMedicalRecordsLivewire;
+use App\Livewire\Guest\DoctorsListingLivewire;
 use App\Livewire\Guest\HomeLivewire;
 use App\Livewire\Guest\HospitalsListingLivewire;
 use App\Livewire\Patient\DiagnosisHistoryLivewire;
@@ -21,6 +22,7 @@ Route::fallback(function () {
 
 Route::get('/', HomeLivewire::class)->name('home');
 Route::get('/hospitals', HospitalsListingLivewire::class)->name('hospitals');
+Route::get('/doctors', DoctorsListingLivewire::class)->name('doctors');
 
 Route::middleware(['auth', 'verified'])->group(function () {
 

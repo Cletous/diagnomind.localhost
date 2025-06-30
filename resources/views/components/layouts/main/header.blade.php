@@ -30,7 +30,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link {{ request()->routeIs('doctors') ? 'active fw-bold text-primary' : '' }}"
-                        href="#">
+                        href="{{ route('doctors') }}">
                         Doctors
                     </a>
                 </li>
