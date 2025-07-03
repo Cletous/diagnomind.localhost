@@ -32,7 +32,10 @@ class ProfileLivewire extends Component
             'first_name' => 'required|string|max:100',
             'last_name' => 'required|string|max:100',
             'email' => 'required|email|unique:users,email,' . Auth::id(),
-            'national_id_number' => 'required|string|unique:users,national_id_number,' . Auth::id(),
+            'national_id_number' => 'required|string|regex:/^\d{8,9}[A-Z]\d{2}$/|unique:users,national_id_number,' . Auth::id(),
+        ], [
+            'national_id_number.regex' =>
+                'The national id number must be in the format NNNNNNNNLNN or NNNNNNNNNLNN where N is a Number and L a capital letter.'
         ]);
 
         Auth::user()->update($validated);
@@ -59,6 +62,7 @@ class ProfileLivewire extends Component
         session()->invalidate();
         session()->regenerateToken();
 
+        session()->flash('success', 'Profile deleted successfully.');
         return redirect('/')->with('message', 'Account deleted successfully.');
     }
 

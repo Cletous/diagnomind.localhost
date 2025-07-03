@@ -59,6 +59,9 @@ class GetAiDiagnosisLivewire extends Component
             'new_patient_last_name' => 'required|string|max:100',
             'new_patient_email' => 'required|email|unique:users,email',
             'national_id_number' => 'required|regex:/^\d{8,9}[A-Z]\d{2}$/|unique:users,national_id_number',
+        ], [
+            'national_id_number.regex' =>
+                'The national id number must be in the format NNNNNNNNLNN or NNNNNNNNNLNN where N is a Number and L a capital letter.'
         ]);
 
         $user = User::create([
